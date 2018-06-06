@@ -1,5 +1,8 @@
 package com.semantyca.nb.core.boundary;
 
+import com.semantyca.nb.core.page.Page;
+
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -22,16 +25,17 @@ import java.io.StringWriter;
 import java.net.URL;
 
 @Path("pages")
+@RequestScoped
 public class PagesResource {
     private static final String XSLT_FOLDER = "xslt";
 
     @Context
     HttpServletRequest servletContext;
-        
+
     @Inject
     PageProvider provider;
 
-    
+
     @GET
     @Produces(MediaType.TEXT_HTML)
     public Response getDefault() {
@@ -47,9 +51,8 @@ public class PagesResource {
         try {
             XMLPage xmlPage = new XMLPage(pageObject);
             Source source = new StreamSource(new StringReader(xmlPage.getBody()));
-            URL url = getClass().getClassLoader().getResource(xmlPage.getXslt());
             StreamSource xsltFile = new StreamSource();
-            xsltFile.setInputStream(url.openStream());
+            xsltFile.setInputStream(xmlPage.getXslt().openStream());
             TransformerFactory tFactory = TransformerFactory.newInstance();
             Transformer transformer = tFactory.newTransformer(xsltFile);
             transformer.transform(source, new StreamResult(writer));
@@ -69,42 +72,32 @@ public class PagesResource {
     @Path("xml/{id}")
     @Produces(MediaType.APPLICATION_XML)
     public Response getXML(@PathParam("id") String id) {
-          return Response.status(200).entity(provider.getPage(id)).build();
+        return Response.status(200).entity(provider.getPage(id)).build();
     }
 
-    class XMLPage{
+    class XMLPage {
         private String body;
-        private String xslt;
+        private URL xslt;
 
-        XMLPage(Object object) throws JAXBException{
-        JAXBContext context = JAXBContext.newInstance(object.getClass());
+        XMLPage(Object object) throws JAXBException {
+            JAXBContext context = JAXBContext.newInstance(object.getClass());
             Marshaller marshaller = context.createMarshaller();
             StringWriter sw = new StringWriter();
             marshaller.marshal(object, sw);
             body = sw.toString();
- //           Page pageAnnotation = object.getClass().getAnnotation(Page.class);
-              //String realPath = servletContext.getContextPath();
-                String fileName = XSLT_FOLDER + File.separator +  "signin.xsl";
-                ClassLoader classLoader = this.getClass().getClassLoader();
-        File file = new File(classLoader.getResource(fileName).getFile());
-              System.out.println(file.getAbsolutePath());
-            xslt = XSLT_FOLDER + File.separator +  "signin.xsl";
+            Page pageAnnotation = object.getClass().getAnnotation(Page.class);
+            String fileName = XSLT_FOLDER + File.separator + pageAnnotation.value();
+            ClassLoader classLoader = this.getClass().getClassLoader();
+           // System.out.println(file.getAbsolutePath());
+            xslt = classLoader.getResource(fileName);
         }
 
         public String getBody() {
             return body;
         }
 
-        public void setBody(String body) {
-            this.body = body;
-        }
-
-        public String getXslt() {
+        public URL getXslt() {
             return xslt;
-        }
-
-        public void setXslt(String xslt) {
-            this.xslt = xslt;
         }
 
     }

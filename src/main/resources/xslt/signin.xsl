@@ -21,7 +21,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="span12">
-                            <form class="form-horizontal" action="/nb/api/session" method="POST">
+                            <form class="form-horizontal" action="/nb/sessions" method="POST">
                                 <fieldset>
                                     <div id="legend">
                                         <legend class="">Login</legend>

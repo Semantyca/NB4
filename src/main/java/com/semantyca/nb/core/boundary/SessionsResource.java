@@ -3,6 +3,7 @@ package com.semantyca.nb.core.boundary;
 import com.semantyca.administrator.entity.User;
 import com.semantyca.nb.core.env.EnvConst;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.Response;
 import java.security.Principal;
 
 @Path("sessions")
+@RequestScoped
 public class SessionsResource {
     
     @Context
