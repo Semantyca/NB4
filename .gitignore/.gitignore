@@ -1,12 +1,4 @@
-#
-# Project specific excludes
-#
 
-tomcat
-
-#
-# Default excludes
-#
 
 # Binaries
 *.7z
