@@ -1,4 +1,4 @@
-package com.semantyca.essential.administrator.entity;
+package com.semantyca.administrator.entity;
 
 import javax.persistence.*;
 

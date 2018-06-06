@@ -1,4 +1,4 @@
-package com.semantyca.essential.administrator.boundary.page;
+package com.semantyca.administrator.boundary.page;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

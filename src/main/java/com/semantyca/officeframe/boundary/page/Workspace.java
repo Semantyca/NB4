@@ -1,7 +1,8 @@
 package com.semantyca.officeframe.boundary.page;
 
 
-import com.semantyca.essential.page.Page;
+import com.semantyca.nb.core.page.Page;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
