@@ -1,4 +1,4 @@
-package com.semantyca.nb.core.util;
+package com.semantyca.nb.util;
 
 import java.io.*;
 import java.lang.annotation.Annotation;
