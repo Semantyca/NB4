@@ -28,18 +28,15 @@ public class PagesResource {
     @Inject
     PageProvider provider;
 
-    public PagesResource() {
-    }
-
     @GET
-    @Produces({"text/html"})
+    @Produces({MediaType.TEXT_HTML})
     public Response getDefault() {
-        return this.getPage("signin");
+        return getPage("index");
     }
 
     @GET
     @Path("{id}")
-    @Produces({"text/html"})
+    @Produces(MediaType.TEXT_HTML)
     public Response getPage(@PathParam("id") String id) {
         StringWriter writer = new StringWriter();
         try {

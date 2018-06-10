@@ -14,7 +14,8 @@ public class PageProvider {
     public XMLPage getPage(String id) {
 
         if (pages == null) {
-            pages = ReflectionUtil.getPageClasses(EnvConst.MAIN_PACKAGE + ".administrator.boundary.page");
+            pages = ReflectionUtil.getPageClasses(EnvConst.MAIN_PACKAGE + ".nb.core.boundary.page");
+            pages.putAll(ReflectionUtil.getPageClasses(EnvConst.MAIN_PACKAGE + ".administrator.boundary.page"));
             pages.putAll(ReflectionUtil.getPageClasses(EnvConst.MAIN_PACKAGE + ".officeframe.boundary.page"));
         }
         return pages.get(id);

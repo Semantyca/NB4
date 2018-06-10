@@ -8,10 +8,9 @@
     <class>com.semantyca.administrator.entity.Group</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
-      <!--<property name="javax.persistence.schema-generation.database.action" value="create"/>
-      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.DerbyPlatform"/>-->
       <property name="eclipselink.target-database" value="PostgreSQL" />
       <property name="eclipselink.logging.level" value="FINE"/>
+<!--      <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/initial_data.sql"/>-->
     </properties>
   </persistence-unit>
 </persistence>

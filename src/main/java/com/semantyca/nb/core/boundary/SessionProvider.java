@@ -4,7 +4,6 @@ import com.semantyca.administrator.entity.Group;
 import com.semantyca.administrator.entity.User;
 import com.semantyca.nb.util.StringUtil;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,13 +18,6 @@ public class SessionProvider {
     @PersistenceContext(unitName = "Administrator")
     EntityManager em;
 
-    
-    @PostConstruct
-    public void init(){
-         System.out.println("----------------Session provider injected");
-         System.out.println("em=" + em);
-    }
-    
     
     public User createUser(User user) {
         try {
@@ -44,7 +36,6 @@ public class SessionProvider {
     }
 
     public User findUserById(String id) {
-      //  if (em == null) Lg.info("em is null");
         TypedQuery<User> query = em.createNamedQuery("findById", User.class);
         query.setParameter("email", id);
         User user = null;
