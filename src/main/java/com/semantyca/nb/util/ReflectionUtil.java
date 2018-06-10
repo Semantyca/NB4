@@ -1,17 +1,18 @@
 package com.semantyca.nb.util;
 
+import com.semantyca.nb.core.page.Page;
+import com.semantyca.nb.core.page.XMLPage;
+
 import java.io.*;
-import java.lang.annotation.Annotation;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReflectionUtil {
 
+    public static Map<String, XMLPage> getPageClasses(String pack) {
 
-    public static List<Class> getAnnotatedClasses(String pack, Class<? extends Annotation> ann) {
-
-        List<Class> classes = new ArrayList<Class>();
+        Map<String, XMLPage> classes = new HashMap();
         URL upackage = ReflectionUtil.class.getClassLoader().getResource(pack.replace(".", File.separator));
 
         BufferedReader dis = null;
@@ -20,9 +21,18 @@ public class ReflectionUtil {
             String line = null;
             while ((line = dis.readLine()) != null) {
                 if (line.endsWith(".class")) {
-                    Class clazz = Class.forName(pack + "." + line.substring(0, line.lastIndexOf('.')));
-                    if (clazz.isAnnotationPresent(ann)) {
-                        classes.add(clazz);
+                    Class<?> clazz = Class.forName(pack + "." + line.substring(0, line.lastIndexOf('.')));
+                    Page pageAnnotation = clazz.getAnnotation(Page.class);
+                    if (pageAnnotation != null) {
+                        String pageId = pageAnnotation.value();
+                        if ("".equals(pageId)){
+                            pageId = clazz.getSimpleName().toLowerCase();
+                        }
+                        String pageXslt = pageAnnotation.xslt();
+                        if ("".equals(pageXslt)){
+                            pageXslt = pageId + ".xsl";
+                        }
+                        classes.put(pageId, new XMLPage(pageId, pageXslt, clazz.getCanonicalName()));
                     }
                 }
             }
