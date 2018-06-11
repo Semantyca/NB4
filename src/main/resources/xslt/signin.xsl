@@ -21,16 +21,16 @@
                 <div class="container">
                     <div class="row">
                         <div class="span12">
-                            <form class="form-horizontal" action="/nb/api/session" method="POST">
+                            <form class="form-horizontal" action="/nb/sessions" method="POST">
                                 <fieldset>
                                     <div id="legend">
                                         <legend class="">Login</legend>
                                     </div>
                                     <div class="control-group">
                                         <!-- Username -->
-                                        <label class="control-label"  for="username">Username</label>
+                                        <label class="control-label"  for="userName">Username</label>
                                         <div class="controls">
-                                            <input type="text" id="username" name="username" placeholder="" class="input-xlarge"/>
+                                            <input type="text" id="userName" name="userName" placeholder="" class="input-xlarge"/>
                                         </div>
                                     </div>
                                     <div class="control-group">

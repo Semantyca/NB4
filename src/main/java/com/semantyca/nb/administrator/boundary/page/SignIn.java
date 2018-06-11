@@ -1,4 +1,4 @@
-package com.semantyca.administrator.boundary.page;
+package com.semantyca.nb.administrator.boundary.page;
 
 import com.semantyca.nb.core.env.EnvConst;
 import com.semantyca.nb.core.page.Page;

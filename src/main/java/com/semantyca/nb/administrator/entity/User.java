@@ -1,17 +1,19 @@
-package com.semantyca.administrator.entity;
+package com.semantyca.nb.administrator.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 @Entity
 @Table(name="_users")
 @NamedQueries({
-        @NamedQuery(name = "findById", query = "SELECT u FROM User u WHERE u.email = :email")
+        @NamedQuery(name = "findById", query = "SELECT u FROM User u WHERE u.name = :name")
 })
 public class User{
     @Id
     @Column(name="email", nullable=false)
     private String email;
 
+    @JsonbTransient
     @Column(name="password", nullable=false, length=64)
     private String password;
 
@@ -25,21 +27,27 @@ public class User{
         this.password = password;
         this.name = name;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }

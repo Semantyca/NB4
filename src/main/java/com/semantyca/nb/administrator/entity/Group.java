@@ -1,4 +1,4 @@
-package com.semantyca.administrator.entity;
+package com.semantyca.nb.administrator.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

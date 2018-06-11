@@ -4,8 +4,8 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <!--<jta-data-source>jdbc/__default</jta-data-source>-->    
     <jta-data-source>jdbc/Administrator</jta-data-source>
-    <class>com.semantyca.administrator.entity.User</class>
-    <class>com.semantyca.administrator.entity.Group</class>
+    <class>com.semantyca.nb.administrator.entity.User</class>
+    <class>com.semantyca.nb.administrator.entity.Group</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.target-database" value="PostgreSQL" />
