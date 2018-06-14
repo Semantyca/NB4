@@ -1,16 +1,12 @@
 package com.semantyca.nb.ui.view;
 
-
 import com.semantyca.nb.ui.filter.FilterForm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-
-public class ViewPage<T> {
-
-    private List<T> result;
+public class ViewPage {
+    private List result;
     private long count;
     private int maxPage;
     private int pageNum;
@@ -18,27 +14,20 @@ public class ViewPage<T> {
     private ViewOption option;
     private FilterForm filter;
 
-    public ViewPage(List<T> result, long count, int maxPage, int pageNum) {
+    public ViewPage(List result, long count, int maxPage, int pageNum) {
         this.result = result;
         this.count = count;
         this.maxPage = maxPage;
         this.pageNum = pageNum;
     }
 
-    public ViewPage(Object result, long count, int maxPage, int pageNum, boolean showWasRead) {
-        this.result = (List<T>) Arrays.asList((T) result).get(0);
-        this.count = count;
-        this.maxPage = maxPage;
-        this.pageNum = pageNum;
-    }
-
-    public ViewPage(List<T> result, long count, int maxPage, int pageNum, String k) {
+    public ViewPage(List result, long count, int maxPage, int pageNum, String k) {
         this(result, count, maxPage, pageNum);
         keyword = k;
     }
 
     public ViewPage() {
-        this(new ArrayList<T>(), 0, 1, 1);
+        this(new ArrayList(), 0, 1, 1);
     }
 
     public long getCount() {
@@ -49,11 +38,11 @@ public class ViewPage<T> {
         this.count = count;
     }
 
-    public List<T> getResult() {
+    public List getResult() {
         return result;
     }
 
-    public void setResult(List<T> result) {
+    public void setResult(List result) {
         this.result = result;
     }
 
@@ -97,9 +86,4 @@ public class ViewPage<T> {
         this.filter = filter;
     }
 
-    public void merge(ViewPage<T> vp) {
-        this.result.addAll(vp.result);
-        this.count = count + vp.count;
-        this.maxPage = maxPage + vp.maxPage;
-    }
 }

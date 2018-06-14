@@ -11,6 +11,7 @@ public class EnvConst {
     public static final String FRAMEWORK_LOGO = "nextbase_logo_small.png";
     public static final String MAIN_PACKAGE = "com.semantyca";
     public static final String[] DEFAULT_LANGS = {"ENG", "RUS", "KAZ"};
+    public static final String FSID_FIELD_NAME = "fsid";
 
     public static int DEFAULT_PAGE_SIZE = 20;
     public static String DEFAULT_DATE_FORMAT;

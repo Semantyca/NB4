@@ -1,6 +1,10 @@
 package com.semantyca.nb.core.rest.security;
 
+import com.semantyca.nb.core.user.AnonymousUser;
+
 import javax.annotation.Priority;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -14,6 +18,10 @@ import java.io.IOException;
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
 
+    @Inject
+    @AuthenticatedUserSession
+    private Event<Session> userAuthenticatedEvent;
+
     private static final String REALM = "example";
     private static final String AUTHENTICATION_SCHEME = "Bearer";
 
@@ -23,6 +31,9 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         if (!isTokenBasedAuthentication(authorizationHeader)) {
             abortWithUnauthorized(requestContext);
+            Session userSession = new Session();
+            userSession.setUser(new AnonymousUser());
+            userAuthenticatedEvent.fire(userSession);
             return;
         }
 

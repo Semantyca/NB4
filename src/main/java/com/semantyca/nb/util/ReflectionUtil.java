@@ -10,6 +10,11 @@ import java.util.Map;
 
 public class ReflectionUtil {
 
+    public static<T> Class<T> getClass(Class<T> pack) {
+        return pack;
+
+    }
+
     public static Map<String, XMLPage> getPageClasses(String pack) {
 
         Map<String, XMLPage> classes = new HashMap();

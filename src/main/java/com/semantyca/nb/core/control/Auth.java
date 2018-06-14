@@ -1,8 +1,8 @@
 package com.semantyca.nb.core.control;
 
-import com.semantyca.nb.administrator.entity.User;
 import com.semantyca.nb.core.rest.security.AuthenticatedUserSession;
-import com.semantyca.nb.core.rest.security.UserSession;
+import com.semantyca.nb.core.rest.security.Session;
+import com.semantyca.nb.modules.administrator.model.User;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
@@ -18,21 +18,21 @@ import java.util.UUID;
 @Stateless
 public class Auth {
 
-    @PersistenceContext(unitName = "Administrator")
+    @PersistenceContext(unitName = "nb")
     EntityManager em;
 
     @Inject
     @AuthenticatedUserSession
-    Event<UserSession> userAuthenticatedEvent;
+    private Event<Session> userAuthenticatedEvent;
 
     private static Map authorizationTokens = new HashMap();
 
-    public UserSession authenticate(String userName, String password) {
+    public Session authenticate(String userName, String password) {
 
         try {
             User user = findUser(userName);
             if (user != null) {
-                UserSession userSession = new UserSession();
+                Session userSession = new Session();
                 userSession.setUser(user);
                 String authToken = issueToken(userName);
                 userSession.setToken(authToken);
@@ -54,7 +54,7 @@ public class Auth {
     }
 
     private User findUser(String userName) {
-        TypedQuery<User> query = em.createNamedQuery("findById", User.class);
+        TypedQuery<User> query = em.createNamedQuery("findByName", User.class);
         query.setParameter("name", userName);
         User user = null;
         try {
@@ -64,4 +64,32 @@ public class Auth {
         }
         return user;
     }
+
+    @FunctionalInterface
+    interface Square
+    {
+        int calculate(int x);
+    }
+
+    @FunctionalInterface
+    interface Merger{
+        String plus(String x);
+    }
+
+
+        public static void main(String args[])
+        {
+            int a = 5;
+
+            // lambda expression to define the calculate method
+
+            Merger m = (String val) -> val + "-" + val;
+
+            // parameter passed and return type must be
+            // same as defined in the prototype
+
+            String res = m.plus("bla");
+            System.out.println(res);
+        }
+
 }

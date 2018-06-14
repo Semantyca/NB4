@@ -1,8 +1,8 @@
-INSERT INTO public._users(
+INSERT INTO public._users(reg_date,
             email, password, name)
-    VALUES ('dev@semantyca.com', 'secret','admin');
+    VALUES (current_timestamp, 'dev@semantyca.com', 'secret','admin');
 
 
-INSERT INTO public._groups(
+INSERT INTO public._groups(reg_date,
   email, groupname)
-VALUES ('dev@semantyca.com', 'admins');
+VALUES (current_timestamp, 'dev@semantyca.com', 'admins');

@@ -1,7 +1,7 @@
 package com.semantyca.nb.ui.view;
 
 
-import com.semantyca.nb.ui.constants.SelectionMode;
+import com.semantyca.nb.ui.constant.SelectionMode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.Map;
 public class ViewOption {
 
     /**
-     * "entity kind": [view column group]
+     * "model kind": [view column group]
      * строка документа состоит из групп колонок
      * <p>
      * root опции ("root": [view column group]) применяются для заголовков

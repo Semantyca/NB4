@@ -5,10 +5,11 @@ import com.semantyca.nb.core.env.EnvConst;
 import java.util.LinkedHashMap;
 
 public class Outcome {
-    public final static String UNDEFINED_ID = "undefined";
-    protected String id = UNDEFINED_ID;
-    protected String title = EnvConst.APP_ID;
-    protected LinkedHashMap<String, Object> payload = new LinkedHashMap<>();
+    private final static String UNDEFINED_ID = "undefined";
+    private String id = UNDEFINED_ID;
+    private String title = EnvConst.APP_ID;
+    private String payloadTitle = EnvConst.APP_ID;
+    private LinkedHashMap<String, Object> payload = new LinkedHashMap<>();
 
     public String getId() {
         return id;
@@ -27,17 +28,22 @@ public class Outcome {
         return this;
     }
 
-    public Outcome setPayload(LinkedHashMap<String, Object> payload) {
-        this.payload = payload;
+    public Outcome addPayload(String key, Object val) {
+        payload.put(key, val);
         return this;
     }
 
-    public Outcome addPayload(String key, Object payload) {
-        this.payload.put(key, payload);
+    public Outcome addPayload(Object val) {
+        payload.put(val.getClass().getSimpleName().toLowerCase(), val);
         return this;
     }
 
     public LinkedHashMap<String, Object> getPayload() {
         return payload;
+    }
+
+    public Outcome setPayloadTitle(String title) {
+        payloadTitle = title;
+        return this;
     }
 }

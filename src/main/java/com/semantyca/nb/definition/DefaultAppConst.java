@@ -15,17 +15,13 @@ public class DefaultAppConst {
     public static String NAME_BUL = "";
     public static String NAME_RUS = "";
     public static String NAME_KAZ = "";
-    public static String BASE_URL = "/wrong_application_name/";
-    public static String[] ROLES = {};
-    public static String[] ORG_LABELS = {};
-    public static String APPROVAL_ROUTE_CATEGORIES[] = {};
-    public static String DEFAULT_PAGE = "index";
+    public static String BASE_URL = "wrong_application_name/";
     public static String AVAILABLE_THEME[] = {"azul", "cinzento", "branco", "preto"};
     public static String DEFAULT_THEME = "branco";
-    public static String DEPENDENCIES[] = new String[0];
     public static boolean FORCE_DEPLOYING = false;
-    public static String[][] NOT_NULL = null;
 
-    public static String TAG_CATEGORIES[] = {};
+    public static String[] ROLES = {};
+    public static String[] ORG_LABELS = {};
+    public static String[] TAG_CATEGORIES = {};
     public static String[] UNIT_CATEGORIES = {"quantity","area"};
 }
