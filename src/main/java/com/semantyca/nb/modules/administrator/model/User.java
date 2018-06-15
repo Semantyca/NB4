@@ -2,7 +2,12 @@ package com.semantyca.nb.modules.administrator.model;
 
 import com.semantyca.nb.core.dataengine.jpa.model.SimpleAppEntity;
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.LocalDateTimeConverter;
+import com.semantyca.nb.core.env.EnvConst;
 import com.semantyca.nb.core.user.IUser;
+import com.semantyca.nb.core.user.constants.UserStatusCode;
+import com.semantyca.nb.localization.constants.LanguageCode;
+import com.semantyca.nb.modules.administrator.model.convertor.LanguageCodeConverter;
+import com.semantyca.nb.modules.administrator.model.convertor.UserStatusCodeConverter;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
@@ -11,7 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name="_users")
 @NamedQueries({
-        @NamedQuery(name = "findByName", query = "SELECT u FROM User u WHERE u.name = :name")
+        @NamedQuery(name = "findByName", query = "SELECT u FROM User u WHERE u.login = :name")
 })
 public class User extends SimpleAppEntity implements IUser {
 
@@ -26,16 +31,19 @@ public class User extends SimpleAppEntity implements IUser {
     @Column(name="password", nullable=false, length=64)
     private String password;
 
-    @Column(name="name", nullable=false, length=30)
-    private String name;
+    @Column(name="identifier", nullable=false, length=64)
+    private String login;
 
-    public User(){}
+    @Convert(converter = UserStatusCodeConverter.class)
+    private UserStatusCode status = UserStatusCode.UNKNOWN;
 
-    public User(String email, String password, String name) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-    }
+    @Column(name = "default_lang")
+    @Convert(converter = LanguageCodeConverter.class)
+    private LanguageCode defaultLang = EnvConst.getDefaultLang();
+
+    @Column(name = "i_su")
+    private boolean isSuperUser;
+
 
     public String getEmail() {
         return email;
@@ -62,17 +70,33 @@ public class User extends SimpleAppEntity implements IUser {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLogin(String name) {
+        this.login = name;
     }
 
+    public UserStatusCode getStatus() {
+        return status;
+    }
 
-    public  boolean isSuperUser(){
-        return false;
+    public void setStatus(UserStatusCode status) {
+        this.status = status;
+    }
+
+    public LanguageCode getDefaultLang() {
+        return defaultLang;
+    }
+
+    public void setDefaultLang(LanguageCode defaultLang) {
+        this.defaultLang = defaultLang;
+    }
+
+    @Override
+    public boolean isSuperUser() {
+        return isSuperUser;
     }
 
 }

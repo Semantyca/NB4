@@ -12,7 +12,8 @@ public class Session implements Serializable {
     private String token;
     private LanguageCode lang = EnvConst.getDefaultLang();
     private int pageSize = EnvConst.DEFAULT_PAGE_SIZE;
-    private String redirectURL = "";
+
+    private String redirectURL = "Administrator/navigator";
 
     public LanguageCode getLang() {
         return lang;
@@ -53,4 +54,14 @@ public class Session implements Serializable {
     public void setToken(String token) {
         this.token = token;
     }
+
+
+    public String getRedirectURL() {
+        return redirectURL;
+    }
+
+    public void setRedirectURL(String redirectURL) {
+        this.redirectURL = redirectURL;
+    }
+
 }

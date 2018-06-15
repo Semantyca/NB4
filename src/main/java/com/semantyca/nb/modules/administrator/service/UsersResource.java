@@ -8,6 +8,7 @@ import com.semantyca.nb.core.user.IUser;
 import com.semantyca.nb.logger.Lg;
 import com.semantyca.nb.modules.administrator.dao.UserDAO;
 import com.semantyca.nb.modules.administrator.init.ModuleConst;
+import com.semantyca.nb.ui.action.ActionBar;
 import com.semantyca.nb.ui.action.ConventionalActionFactory;
 import com.semantyca.nb.ui.view.SortParams;
 import com.semantyca.nb.ui.view.ViewPage;
@@ -50,11 +51,11 @@ public class UsersResource extends AbstractService {
 
         if (user.isSuperUser()) {
             ConventionalActionFactory action = new ConventionalActionFactory();
-          /*  ActionBar actionBar = new ActionBar(session);
+            ActionBar actionBar = new ActionBar(session);
             actionBar.addAction(action.addNew);
             actionBar.addAction(action.deleteDocument);
-            actionBar.addAction(action.refreshVew);*/
-         //   outcome.addPayload(actionBar);
+            actionBar.addAction(action.refreshVew);
+            outcome.addPayload(actionBar);
         }
 
         outcome.setTitle("Users");

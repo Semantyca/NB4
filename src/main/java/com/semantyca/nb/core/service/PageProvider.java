@@ -16,7 +16,7 @@ public class PageProvider {
         if (pages == null) {
             pages = ReflectionUtil.getPageClasses(EnvConst.MAIN_PACKAGE + ".nb.core.service.page");
             pages.putAll(ReflectionUtil.getPageClasses(EnvConst.MAIN_PACKAGE + ".nb.modules.administrator.service.page"));
-            pages.putAll(ReflectionUtil.getPageClasses(EnvConst.MAIN_PACKAGE + ".officeframe.service.page"));
+            pages.putAll(ReflectionUtil.getPageClasses(EnvConst.MAIN_PACKAGE + ".officeframe.modules.workspace.service.page"));
         }
         return pages.get(id);
     }

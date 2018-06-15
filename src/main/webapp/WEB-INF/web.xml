@@ -5,8 +5,8 @@
          version="3.1">
 
     <display-name>Auth</display-name>
-    <!--
-        <context-param>
+
+    <!--    <context-param>
             <param-name>javax.faces.PROJECT_STAGE</param-name>
             <param-value>Development</param-value>
         </context-param>
@@ -23,7 +23,13 @@
         <servlet-mapping>
             <servlet-name>Faces Servlet</servlet-name>
             <url-pattern>*.xhtml</url-pattern>
-        </servlet-mapping>-->
+            <url-pattern>*.js</url-pattern>
+        </servlet-mapping>
+-->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
 
     <session-config>
         <session-timeout>
@@ -32,7 +38,7 @@
     </session-config>
 
     <welcome-file-list>
-        <welcome-file>info.html</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
     <!-- SECURITY -->
@@ -63,7 +69,5 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-
-
 
 </web-app>

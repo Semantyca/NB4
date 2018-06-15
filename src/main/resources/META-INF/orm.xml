@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <entity-mappings xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/orm" version="2.1">
     <converter class="com.semantyca.nb.core.dataengine.jpa.model.convertor.LocalDateTimeConverter"/>
-
+    <converter class="com.semantyca.nb.modules.administrator.model.convertor.UserStatusCodeConverter"/>
+    <converter class="com.semantyca.nb.modules.administrator.model.convertor.LanguageCodeConverter"/>
+    <converter class="com.semantyca.nb.modules.administrator.model.convertor.LocalizedValConverter"/>
 </entity-mappings>

@@ -17,7 +17,7 @@ public class FilterItem {
     /*
      * style
      * function body. example: return { color:it.color }
-     * model argument name: it
+     * model argument identifier: it
      */
     public String style;
     public String url;

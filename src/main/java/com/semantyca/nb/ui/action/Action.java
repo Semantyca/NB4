@@ -1,9 +1,6 @@
 package com.semantyca.nb.ui.action;
 
 
-import com.semantyca.nb.core.rest.security.Session;
-import com.semantyca.nb.localization.Vocabulary;
-import com.semantyca.nb.localization.constants.LanguageCode;
 import com.semantyca.nb.ui.action.constants.ActionPayloadType;
 import com.semantyca.nb.ui.action.constants.ActionType;
 import com.semantyca.nb.ui.constant.SelectionMode;
@@ -83,7 +80,7 @@ public class Action {
         this.customID = customID;
     }
 
-    void setupCaption(Session session, Vocabulary v) {
+   /* void setupCaption(Session session, Vocabulary v) {
         LanguageCode lang = session.getLang();
         if (caption != null && !caption.isEmpty()) {
             caption = v.getWord(caption, lang);
@@ -102,7 +99,7 @@ public class Action {
                 hint = "";
             }
         }
-    }
+    }*/
 
     public Action id(String id) {
         this.customID = id;

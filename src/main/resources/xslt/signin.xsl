@@ -30,14 +30,14 @@
                                         <!-- Username -->
                                         <label class="control-label"  for="userName">Username</label>
                                         <div class="controls">
-                                            <input type="text" id="userName" name="userName" placeholder="" class="input-xlarge"/>
+                                            <input type="text" id="userName" identifier="userName" placeholder="" class="input-xlarge"/>
                                         </div>
                                     </div>
                                     <div class="control-group">
                                         <!-- Password-->
                                         <label class="control-label" for="password">Password</label>
                                         <div class="controls">
-                                            <input type="password" id="password" name="password" placeholder="" class="input-xlarge"/>
+                                            <input type="password" id="password" identifier="password" placeholder="" class="input-xlarge"/>
                                         </div>
                                     </div>
                                     <div class="control-group">

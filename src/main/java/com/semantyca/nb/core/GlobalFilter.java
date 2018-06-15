@@ -20,7 +20,6 @@ public class GlobalFilter  implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-
         Session userSession = new Session();
         //userSession.setUser(new AnonymousUser());
         userSession.setUser(new SuperUser()); //just for testing

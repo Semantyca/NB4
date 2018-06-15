@@ -18,10 +18,7 @@ public abstract class SimpleAppEntity implements ISimpleAppEntity<Long> {
         return id;
     }
 
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 
     public String getType() {
         return getClass().getSimpleName();

@@ -18,11 +18,11 @@
                     <xsl:value-of select="//captions/brand/@caption"/>
                 </title>
                 <link rel="shortcut icon" href="img/favicon.png"/>
-                <meta name="format-detection" content="telephone=no"/>
+                <meta identifier="format-detection" content="telephone=no"/>
                 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-                <meta name="viewport"
+                <meta identifier="viewport"
                       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-                <meta name="theme-color" content="#394865"/>
+                <meta identifier="theme-color" content="#394865"/>
                 <link rel="manifest" href="manifest.json"/>
                 <link rel="stylesheet" href="/SharedResources/vendor/bootstrap-4/css/bootstrap.min.css"/>
                 <link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css"/>

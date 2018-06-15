@@ -3,11 +3,11 @@ package com.semantyca.nb.ui.view;
 public class ViewColumn {
 
     public String name;
-    public String value; // string | string.string.string; // model field name or normalized data value path
+    public String value; // string | string.string.string; // model field identifier or normalized data value path
     /*
      * valueFn
      * function body. example: return it.field
-     * model argument name: it
+     * model argument identifier: it
      */
     public String valueFn;
     public ViewColumnType type = ViewColumnType.text;
@@ -15,18 +15,18 @@ public class ViewColumn {
     public String icon;
     public String monogram;
     public Sort sort;
-    public String className; // css class name
+    public String className; // css class identifier
     public String valueAsClass; // add value as class {valueAsClass + model[value]}
     /*
      * cellStyle
      * function body. example: return { color:it.color }
-     * model argument name: it
+     * model argument identifier: it
      */
     public String cellStyle;
     /*
      * style for value text
      * function body. example: return { color:'red' }
-     * model argument name: it
+     * model argument identifier: it
      */
     public String style;
     public String format; // date format

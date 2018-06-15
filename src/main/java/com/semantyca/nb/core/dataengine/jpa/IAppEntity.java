@@ -2,18 +2,16 @@ package com.semantyca.nb.core.dataengine.jpa;
 
 import com.semantyca.nb.modules.administrator.model.User;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface IAppEntity extends ISimpleAppEntity<UUID> {
 
-    User getAuthor();
-
-    void setAuthor(User user);
+    Long getAuthor();
 
     void setLastModifier(User user);
 
-    Date getRegDate();
+    LocalDateTime getRegDate();
 
     boolean isEditable();
 

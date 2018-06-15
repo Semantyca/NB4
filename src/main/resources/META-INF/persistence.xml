@@ -6,13 +6,15 @@
     <jta-data-source>jdbc/nb</jta-data-source>
     <class>com.semantyca.nb.modules.administrator.model.User</class>
     <class>com.semantyca.nb.modules.administrator.model.Group</class>
+    <class>com.semantyca.nb.modules.administrator.model.Module</class>
+    <class>com.semantyca.nb.modules.administrator.model.Language</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.target-database" value="PostgreSQL" />
       <property name="eclipselink.logging.level" value="FINE"/>
       <property name="eclipselink.deploy-on-startup" value="true" />
-        <property name="eclipselink.ddl-generation" value="create-tables"/>
-<!--      <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/initial_data.sql"/>-->
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
+      <property name="javax.persistence.sql-load-script-source" value="initial_data.sql"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -2,6 +2,7 @@ package com.semantyca.nb.core.service;
 
 
 import com.semantyca.nb.core.page.XMLPage;
+import com.semantyca.nb.logger.Lg;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -51,7 +52,8 @@ public class PagesResource {
             }else{
                 throw new WebApplicationException(Status.NOT_FOUND);
             }
-        } catch (TransformerConfigurationException var9) {
+        } catch (TransformerConfigurationException e) {
+            Lg.error(e);
             return Response.status(Status.BAD_REQUEST).type("application/json").build();
         } catch (TransformerException var10) {
             return Response.status(Status.BAD_REQUEST).type("application/json").build();

@@ -2,6 +2,7 @@ package com.semantyca.nb.core.dataengine.jpa.model;
 
 
 import com.semantyca.nb.core.dataengine.jpa.IAppEntity;
+import com.semantyca.nb.core.dataengine.jpa.model.convertor.LocalDateTimeConverter;
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.UUIDConverter;
 import com.semantyca.nb.modules.administrator.model.User;
 import org.eclipse.persistence.annotations.Convert;
@@ -9,7 +10,7 @@ import org.eclipse.persistence.annotations.Converter;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -24,16 +25,18 @@ public abstract class AppEntity implements IAppEntity {
     protected UUID id;
 
     @JoinColumn(name = "author", nullable = false, updatable = false)
-    private User author;
+    private Long author;
 
+    @javax.persistence.Convert(converter = LocalDateTimeConverter.class)
     @Column(name = "reg_date", nullable = false, updatable = false)
-    private Date regDate;
+    private LocalDateTime regDate;
 
+    @javax.persistence.Convert(converter = LocalDateTimeConverter.class)
     @Column(name = "last_mod_date", nullable = false)
-    private Date lastModifiedDate = new Date();
+    private LocalDateTime lastModifiedDate = LocalDateTime.now();
 
     @Column(name = "last_mod_user", nullable = false)
-    private User lastModifier;
+    private Long lastModifier;
 
     private String title;
 
@@ -44,9 +47,6 @@ public abstract class AppEntity implements IAppEntity {
     private boolean wasRead = true;
 
     @Transient
-    private boolean hasAttachments;
-
-    @Transient
     private boolean deleted;
 
     @Override
@@ -54,47 +54,28 @@ public abstract class AppEntity implements IAppEntity {
         return id;
     }
 
-    public String getIdentifier() {
-        if (id != null) {
-            return id.toString();
-        } else {
-            return "null";
-        }
-    }
-
     @Override
-    public User getAuthor() {
+    public Long getAuthor() {
         return author;
     }
 
-
-
     @Override
-    public void setAuthor(User user) {
-        author = user;
-    }
-
-    @Override
-    public Date getRegDate() {
+    public LocalDateTime getRegDate() {
         return regDate;
     }
 
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
-    }
-
-    public Date getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
          return lastModifiedDate;
     }
 
-    public User getLastModifier() {
+    public Long getLastModifier() {
         return lastModifier;
     }
 
     @Override
     public void setLastModifier(User user) {
-        lastModifier = user;
-        lastModifiedDate = new Date();
+        lastModifier = user.getId();
+        lastModifiedDate = LocalDateTime.now();
     }
 
     @Override
@@ -104,11 +85,6 @@ public abstract class AppEntity implements IAppEntity {
         }
         UUID id = UUID.fromString(getId().toString());
         return id.toString() + "," + this.getClass().getName();
-    }
-
-    @Override
-    public String getURL() {
-        return getIdentifier();
     }
 
     @Override
@@ -152,5 +128,9 @@ public abstract class AppEntity implements IAppEntity {
         this.deleted = deleted;
     }
 
+
+    public String getURL(){
+        return id.toString();
+    }
 
 }

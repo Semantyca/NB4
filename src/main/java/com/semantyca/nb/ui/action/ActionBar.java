@@ -21,7 +21,7 @@ public class ActionBar{
 
 
     public ActionBar addAction(Action action) {
-       // action.setupCaption(session, appEnv.getVocabulary());
+        //action.setupCaption(session, appEnv.getVocabulary());
         actions.add(action);
         return this;
     }

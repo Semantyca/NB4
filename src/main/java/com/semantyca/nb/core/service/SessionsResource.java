@@ -42,7 +42,7 @@ public class SessionsResource {
 
     @GET
     public String ping() {
-        return "Server " + EnvConst.SERVER_NAME + " " + EnvConst.SERVER_VERSION;
+        return "PING Server " + EnvConst.SERVER_NAME + " " + EnvConst.SERVER_VERSION;
     }
 
     //better to use with Credentials dto. It is just in case
