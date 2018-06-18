@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-                <script src="app.js"/>
+                <script src="/nb/js/app.js"/>
             </body>
         </html>
     </xsl:template>

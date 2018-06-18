@@ -9,7 +9,6 @@ import com.semantyca.nb.logger.Lg;
 import com.semantyca.nb.ui.view.ViewPage;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -20,7 +19,7 @@ import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-@Stateless
+//@Stateless
 public abstract class SimpleDAO<T, K> implements ISimpleDAO<T> {
     public IUser user;
     protected Session ses;
