@@ -39,6 +39,18 @@ public abstract class SimpleDAO<T, K> implements ISimpleDAO<T> {
     }
 
     @Override
+    public T add(T entity) {
+        em.persist(entity);
+        return entity;
+    }
+
+    @Override
+    public T update(T entity) {
+        em.merge(entity);
+        return entity;
+    }
+
+    @Override
     public void delete(T entity) {
 
     }

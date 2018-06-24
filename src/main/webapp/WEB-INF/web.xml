@@ -6,26 +6,6 @@
 
     <display-name>Auth</display-name>
 
-    <!--    <context-param>
-            <param-name>javax.faces.PROJECT_STAGE</param-name>
-            <param-value>Development</param-value>
-        </context-param>
-        <context-param>
-            <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
-            <param-value>.xhtml</param-value>
-        </context-param>
-        <servlet>
-            <servlet-name>Faces Servlet</servlet-name>
-            <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-            <load-on-startup>1</load-on-startup>
-        </servlet>
-
-        <servlet-mapping>
-            <servlet-name>Faces Servlet</servlet-name>
-            <url-pattern>*.xhtml</url-pattern>
-            <url-pattern>*.js</url-pattern>
-        </servlet-mapping>
--->
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>*.js</url-pattern>
@@ -40,34 +20,5 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
-
-    <!-- SECURITY -->
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <realm-name>jdbc-realm</realm-name>
-        <form-login-config>
-            <form-login-page>/pages/signin</form-login-page>
-            <form-error-page>/pages/signin</form-error-page>
-        </form-login-config>
-    </login-config>
-
-    <security-role>
-        <description/>
-        <role-name>users</role-name>
-    </security-role>
-
-    <security-constraint>
-        <display-name>Restricted to users</display-name>
-        <web-resource-collection>
-            <web-resource-name>Restricted Access</web-resource-name>
-            <url-pattern>/user/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>users</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
 
 </web-app>

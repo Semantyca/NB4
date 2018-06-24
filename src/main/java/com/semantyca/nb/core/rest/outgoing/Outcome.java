@@ -2,8 +2,10 @@ package com.semantyca.nb.core.rest.outgoing;
 
 import com.semantyca.nb.core.env.EnvConst;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.LinkedHashMap;
 
+@XmlRootElement
 public class Outcome {
     private final static String UNDEFINED_ID = "undefined";
     private String id = UNDEFINED_ID;

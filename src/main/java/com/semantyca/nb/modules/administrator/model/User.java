@@ -11,6 +11,7 @@ import com.semantyca.nb.modules.administrator.model.convertor.UserStatusCodeConv
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @NamedQueries({
         @NamedQuery(name = "findByName", query = "SELECT u FROM User u WHERE u.login = :name")
 })
+@XmlRootElement(name = "user")
 public class User extends SimpleAppEntity implements IUser {
 
     @Column(name="email", nullable=false)
