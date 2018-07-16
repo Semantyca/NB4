@@ -3,8 +3,10 @@ package com.semantyca.nb.core.service;
 import com.semantyca.nb.core.control.Auth;
 import com.semantyca.nb.core.control.Credentials;
 import com.semantyca.nb.core.env.EnvConst;
+import com.semantyca.nb.core.env.Environment;
 import com.semantyca.nb.core.rest.outgoing.Outcome;
 import com.semantyca.nb.core.rest.security.Session;
+import com.semantyca.nb.util.TimeUtil;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -42,7 +44,7 @@ public class SessionsResource {
 
     @GET
     public String ping() {
-        return "PING Server " + EnvConst.SERVER_NAME + " " + EnvConst.SERVER_VERSION;
+        return "PING Server " + EnvConst.SERVER_NAME + " " + EnvConst.SERVER_VERSION + " " + TimeUtil.dateTimeToStringSilently(Environment.startTime);
     }
 
     //better to use with Credentials dto. It is just in case

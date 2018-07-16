@@ -1,9 +1,9 @@
 package com.semantyca.nb.core.dataengine.jpa.model;
 
 import com.semantyca.nb.core.dataengine.jpa.IAppEntity;
+import com.semantyca.nb.core.dataengine.jpa.model.embedded.Reader;
 import com.semantyca.nb.core.user.IUser;
 
-import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

@@ -15,27 +15,40 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 //@Stateless
-public abstract class SimpleDAO<T, K> implements ISimpleDAO<T> {
+public abstract class SimpleDAO<T, K> implements ISimpleDAO<T, K> {
     public IUser user;
     protected Session ses;
     protected Class<T> entityClass;
 
     @PostConstruct
-    protected void init(){
+    protected void init() {
         entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    @PersistenceContext(unitName = "nb")
+    @PersistenceContext(unitName = "nb4")
     protected EntityManager em;
 
-    @Override
     public T findById(String id) {
-        return null;
+        return findById((K) id);
+    }
+
+    @Override
+    public T findById(K id) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(entityClass);
+        Root<T> c = cq.from(entityClass);
+        cq.select(c);
+        Predicate condition = c.get("id").in(id);
+        cq.where(condition);
+        Query query = em.createQuery(cq);
+        T entity = (T) query.getSingleResult();
+        return entity;
     }
 
     @Override
@@ -64,7 +77,7 @@ public abstract class SimpleDAO<T, K> implements ISimpleDAO<T> {
             Root<T> root = criteriaQuery.from(entityClass);
             criteriaQuery.select(root);
             countCq.select(builder.count(root));
-       //     criteriaQuery.orderBy(builder.asc(root.get("regDate")));
+            //     criteriaQuery.orderBy(builder.asc(root.get("regDate")));
 
             TypedQuery<T> typedQuery = em.createQuery(criteriaQuery);
             Query query = em.createQuery(countCq);
@@ -94,7 +107,6 @@ public abstract class SimpleDAO<T, K> implements ISimpleDAO<T> {
         }
         return maxPage;
     }
-
 
 
 }

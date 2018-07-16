@@ -6,6 +6,7 @@ import com.semantyca.nb.ui.workspace.IconSet;
 import com.semantyca.officeframe.modules.workspace.init.ModuleConst;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -18,6 +19,7 @@ public class Workspace {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response getDefault() {
         return getWorkspace();
     }
@@ -25,6 +27,7 @@ public class Workspace {
     @GET
     @Path("workspace")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response getWorkspace() {
         Outcome outcome = new Outcome();
         try {

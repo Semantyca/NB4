@@ -3,9 +3,11 @@ package com.semantyca.nb.core.dataengine.jpa;
 
 import com.semantyca.nb.ui.view.ViewPage;
 
-public interface ISimpleDAO<T> {
+public interface ISimpleDAO<T, K> {
 
     T findById(String id);
+
+    T findById(K id);
 
     T add(T entity);
 

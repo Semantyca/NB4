@@ -18,7 +18,7 @@ import java.util.UUID;
 @Stateless
 public class Auth {
 
-    @PersistenceContext(unitName = "nb")
+    @PersistenceContext(unitName = "nb4")
     EntityManager em;
 
     @Inject

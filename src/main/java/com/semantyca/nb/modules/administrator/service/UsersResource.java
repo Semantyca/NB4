@@ -37,13 +37,12 @@ public class UsersResource extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getViewPage() {
-        Lg.info("test");
         IUser user = session.getUser();
         Outcome outcome = new Outcome();
         WebFormData params = getWebFormData();
         SortParams sortParams = params.getSortParams(SortParams.asc("login"));
 
-        ViewPage vp = dao.findAll(params.getPage(), session.getPageSize());
+        ViewPage vp = dao.findViewPage(params.getPage(), session.getPageSize());
  //       vp.setResult(new UserToViewEntryConverter().convert(vp.getResult()));
  //       vp.setViewPageOptions(new ViewOptions().getUserOptions());
 
@@ -73,7 +72,7 @@ public class UsersResource extends AbstractService {
         outcome.setPayloadTitle("User");
 
         try {
-            User user = dao.findByLogin(id);
+            User user = dao.findById(id);
             outcome.addPayload(user);
         }catch (Exception e){
 
@@ -86,7 +85,7 @@ public class UsersResource extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(User userDto) {
-        Lg.info("test");
+        Lg.info("test POST");
         IUser user = session.getUser();
         Outcome outcome = new Outcome();
 
@@ -114,7 +113,7 @@ public class UsersResource extends AbstractService {
 
 
 
-    @POST
+  /*  @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addForCXFImpl(User userDto) {
         return add(userDto);
@@ -126,5 +125,5 @@ public class UsersResource extends AbstractService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateForCXFImpl(User userDto) {
         return update(userDto);
-    }
+    }*/
 }

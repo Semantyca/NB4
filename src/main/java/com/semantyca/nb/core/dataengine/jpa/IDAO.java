@@ -5,7 +5,7 @@ import com.semantyca.nb.ui.view.ViewPage;
 
 import java.util.List;
 
-public interface IDAO<T, K> extends ISimpleDAO<T> {
+public interface IDAO<T, K> extends ISimpleDAO<T, K> {
 
     T findByIdIfExist(String id);
 

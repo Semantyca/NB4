@@ -5,6 +5,7 @@ import com.semantyca.nb.modules.administrator.init.ModuleConst;
 import com.semantyca.nb.ui.outline.Outline;
 import com.semantyca.nb.ui.outline.OutlineEntry;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -19,6 +20,7 @@ public class Navigator {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response getDefault() {
         return getNavigator();
     }
@@ -26,6 +28,7 @@ public class Navigator {
     @GET
     @Path("navigator")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response getNavigator() {
         Outline co = new Outline("Server settings", "server");
         co.addEntry(new OutlineEntry("Server parameters", "", "fa fa-server", "server", BASE_URL + "server"));
