@@ -2,13 +2,16 @@ package com.semantyca.nb.core.dataengine.jpa.model;
 
 
 import com.semantyca.nb.core.dataengine.jpa.IAppEntity;
-import com.semantyca.nb.core.dataengine.jpa.model.convertor.LocalDateTimeConverter;
-import com.semantyca.nb.core.dataengine.jpa.model.convertor.UUIDConverter;
-import com.semantyca.nb.modules.administrator.model.User;
+import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalDateTimeConverter;
+import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.UUIDConverter;
+import com.semantyca.nb.core.dataengine.jpa.model.convertor.jaxrs.LocalDateConverter;
+import org.apache.johnzon.mapper.JohnzonConverter;
+import org.apache.johnzon.mapper.JohnzonIgnore;
 import org.eclipse.persistence.annotations.Convert;
 import org.eclipse.persistence.annotations.Converter;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -22,17 +25,23 @@ public abstract class AppEntity implements IAppEntity {
     @GeneratedValue(generator = "uuid-gen")
     @Convert("uuidConverter")
     @Column(name = "id", nullable = false)
-    protected UUID id;
+    @JohnzonConverter(com.semantyca.nb.core.dataengine.jpa.model.convertor.jaxrs.UUIDConverter.class)
+    //@JohnzonIgnore
+    private UUID id;
 
     @JoinColumn(name = "author", nullable = false, updatable = false)
     private Long author;
 
     @javax.persistence.Convert(converter = LocalDateTimeConverter.class)
     @Column(name = "reg_date", nullable = false, updatable = false)
+    @JohnzonConverter(LocalDateConverter.class)
+    @JsonbDateFormat("dd.MM.yyyy kk:mm")
     private LocalDateTime regDate;
 
     @javax.persistence.Convert(converter = LocalDateTimeConverter.class)
     @Column(name = "last_mod_date", nullable = false)
+    @JohnzonConverter(LocalDateConverter.class)
+    @JsonbDateFormat("dd.MM.yyyy kk:mm")
     private LocalDateTime lastModifiedDate = LocalDateTime.now();
 
     @Column(name = "last_mod_user", nullable = false)
@@ -49,9 +58,18 @@ public abstract class AppEntity implements IAppEntity {
     @Transient
     private boolean deleted;
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     @Override
     public UUID getId() {
         return id;
+    }
+
+    @JohnzonIgnore
+    public void setAuthor(Long author) {
+        this.author = author;
     }
 
     @Override
@@ -59,23 +77,32 @@ public abstract class AppEntity implements IAppEntity {
         return author;
     }
 
+
+    public void setRegDate(LocalDateTime regDate) {
+        this.regDate = regDate;
+    }
+
     @Override
     public LocalDateTime getRegDate() {
         return regDate;
     }
 
+    @JohnzonIgnore
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
     public LocalDateTime getLastModifiedDate() {
-         return lastModifiedDate;
+        return lastModifiedDate;
+    }
+
+    @JohnzonIgnore
+    public void setLastModifier(Long lastModifier) {
+        this.lastModifier = lastModifier;
     }
 
     public Long getLastModifier() {
         return lastModifier;
-    }
-
-    @Override
-    public void setLastModifier(User user) {
-        lastModifier = user.getId();
-        lastModifiedDate = LocalDateTime.now();
     }
 
     @Override
@@ -126,11 +153,6 @@ public abstract class AppEntity implements IAppEntity {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-    }
-
-
-    public String getURL(){
-        return id.toString();
     }
 
 }

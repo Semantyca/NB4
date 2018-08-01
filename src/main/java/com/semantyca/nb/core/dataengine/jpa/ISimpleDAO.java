@@ -15,5 +15,6 @@ public interface ISimpleDAO<T, K> {
 
     void delete(T entity);
 
-    ViewPage findAll(int pageNum, int pageSize);
+    ViewPage findViewPage(int pageNum, int pageSize);
+
 }

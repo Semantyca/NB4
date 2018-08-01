@@ -4,5 +4,6 @@ public interface ISimpleAppEntity<K>  {
 
     K getId();
 
+    boolean isNew();
 
 }

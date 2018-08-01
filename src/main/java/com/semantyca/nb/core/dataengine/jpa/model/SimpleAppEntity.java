@@ -11,16 +11,23 @@ public abstract class SimpleAppEntity implements ISimpleAppEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    protected Long id;
+    private Long id;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Override
     public Long getId() {
         return id;
     }
 
-
-
     public String getType() {
         return getClass().getSimpleName();
+    }
+
+    @Override
+    public boolean isNew() {
+        return id == null;
     }
 }

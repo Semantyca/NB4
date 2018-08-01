@@ -20,7 +20,7 @@ public class Server{
     public String freeMemory = Long.toString(Runtime.getRuntime().freeMemory() / 1024 / 1024);
     public String maxMemory = Long.toString(Runtime.getRuntime().maxMemory() / 1024 / 1024);
     public String totalMemory = Long.toString(Runtime.getRuntime().totalMemory() / 1024 / 1024);
-
+    public String tmpDir = EnvConst.TMP_DIR;
     public String path;
     public String totalSpace;
     public String freeSpace;

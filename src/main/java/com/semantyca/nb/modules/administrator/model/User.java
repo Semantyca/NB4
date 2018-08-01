@@ -1,39 +1,51 @@
 package com.semantyca.nb.modules.administrator.model;
 
 import com.semantyca.nb.core.dataengine.jpa.model.SimpleAppEntity;
-import com.semantyca.nb.core.dataengine.jpa.model.convertor.LocalDateTimeConverter;
+import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalDateTimeConverter;
+import com.semantyca.nb.core.dataengine.jpa.model.convertor.jaxrs.LocalDateConverter;
 import com.semantyca.nb.core.env.EnvConst;
 import com.semantyca.nb.core.user.IUser;
 import com.semantyca.nb.core.user.constants.UserStatusCode;
 import com.semantyca.nb.localization.constants.LanguageCode;
+import com.semantyca.nb.modules.administrator.init.ModuleConst;
 import com.semantyca.nb.modules.administrator.model.convertor.LanguageCodeConverter;
 import com.semantyca.nb.modules.administrator.model.convertor.UserStatusCodeConverter;
+import org.apache.johnzon.mapper.JohnzonConverter;
+import org.apache.johnzon.mapper.JohnzonIgnore;
 
-import javax.json.bind.annotation.JsonbTransient;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="_users")
+@Table(name = ModuleConst.CODE + "__users")
 @NamedQueries({
         @NamedQuery(name = "findByName", query = "SELECT u FROM User u WHERE u.login = :name")
 })
-@XmlRootElement(name = "user")
 public class User extends SimpleAppEntity implements IUser {
 
     @Column(name="email", nullable=false)
     private String email;
 
     @Convert(converter = LocalDateTimeConverter.class)
+    //@Convert(converter = LocalDateTimeAttributeConverter.class)
+    @JohnzonConverter(LocalDateConverter.class)
+    @JsonbDateFormat("dd.MM.yyyy kk:mm")
     @Column(name = "reg_date", nullable = false, updatable = false)
     protected LocalDateTime regDate;
 
-    @JsonbTransient
-    @Column(name="password", nullable=false, length=64)
+    @Convert(converter = LocalDateTimeConverter.class)
+    //@Convert(converter = LocalDateTimeAttributeConverter.class)
+    @JohnzonConverter(LocalDateConverter.class)
+    @JsonbDateFormat("dd.MM.yyyy kk:mm")
+    @Column(name = "last_mod_date", nullable = false, updatable = false)
+    protected LocalDateTime lastModifiedDate;
+
+    @Column(name="password", nullable=false, length = 64)
+    @JohnzonIgnore
     private String password;
 
-    @Column(name="identifier", nullable=false, length=64)
+    @Column(name="identifier", nullable=false, length = 64)
     private String login;
 
     @Convert(converter = UserStatusCodeConverter.class)
@@ -58,18 +70,29 @@ public class User extends SimpleAppEntity implements IUser {
     @PrePersist
     private void prePersist() {
         regDate = LocalDateTime.now();
+        lastModifiedDate = regDate;
     }
 
     public LocalDateTime getRegDate() {
         return regDate;
     }
 
-    public String getPassword() {
-        return password;
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        lastModifiedDate = LocalDateTime.now();
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @JohnzonIgnore
+    public String getPassword() {
+        return password;
     }
 
     public String getLogin() {

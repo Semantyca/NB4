@@ -13,7 +13,9 @@ public class EnvConst {
     public static final String[] DEFAULT_LANGS = {"ENG", "RUS", "KAZ"};
     public static final String FSID_FIELD_NAME = "fsid";
 
-    public static int DEFAULT_PAGE_SIZE = 20;
+    public static final String TMP_DIR = System.getProperty("java.io.tmpdir");
+
+    public static int DEFAULT_PAGE_SIZE = 25;
     public static String DEFAULT_DATE_FORMAT = "dd.MM.yyyy";
     public static String DEFAULT_DATETIME_FORMAT = "dd.MM.yyyy kk:mm";
     public static String DEFAULT_TIME_FORMAT = "kk:mm";

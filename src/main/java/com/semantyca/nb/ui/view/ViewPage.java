@@ -2,32 +2,29 @@ package com.semantyca.nb.ui.view;
 
 import com.semantyca.nb.ui.filter.FilterForm;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPage {
     private List result;
     private long count;
-    private int maxPage;
     private int pageNum;
     private String keyword;
     private ViewOption option;
     private FilterForm filter;
+    private int pageSize;
+    private String meta;
 
-    public ViewPage(List result, long count, int maxPage, int pageNum) {
+    public ViewPage(String meta, List result, long count, int pageSize, int pageNum) {
+        this.meta = meta;
         this.result = result;
         this.count = count;
-        this.maxPage = maxPage;
+        this.pageSize = pageSize;
         this.pageNum = pageNum;
     }
 
-    public ViewPage(List result, long count, int maxPage, int pageNum, String k) {
-        this(result, count, maxPage, pageNum);
+    public ViewPage(String meta, List result, long count, int pageSize, int pageNum, String k) {
+        this(meta, result, count, pageSize, pageNum);
         keyword = k;
-    }
-
-    public ViewPage() {
-        this(new ArrayList(), 0, 1, 1);
     }
 
     public long getCount() {
@@ -46,12 +43,12 @@ public class ViewPage {
         this.result = result;
     }
 
-    public int getMaxPage() {
-        return maxPage;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setMaxPage(int maxPage) {
-        this.maxPage = maxPage;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
     public int getPageNum() {
@@ -84,6 +81,10 @@ public class ViewPage {
 
     public void setFilter(FilterForm filter) {
         this.filter = filter;
+    }
+
+    public String getMeta() {
+        return meta;
     }
 
 }

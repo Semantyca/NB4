@@ -20,6 +20,6 @@ public class GlobalResponseFilter  implements ContainerResponseFilter {
         headers.add("Access-Control-Allow-Origin", "*"); //CORS
         headers.add("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type");
         headers.add("Access-Control-Expose-Headers", "Location, Content-Disposition");
-        headers.add("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE");
+        headers.add("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE, OPTIONS");
     }
 }

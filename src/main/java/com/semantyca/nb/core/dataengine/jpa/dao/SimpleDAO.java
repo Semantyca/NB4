@@ -2,10 +2,8 @@ package com.semantyca.nb.core.dataengine.jpa.dao;
 
 
 import com.semantyca.nb.core.dataengine.DataengineUtil;
+import com.semantyca.nb.core.dataengine.jpa.ISimpleAppEntity;
 import com.semantyca.nb.core.dataengine.jpa.ISimpleDAO;
-import com.semantyca.nb.core.rest.security.Session;
-import com.semantyca.nb.core.user.IUser;
-import com.semantyca.nb.logger.Lg;
 import com.semantyca.nb.ui.view.ViewPage;
 
 import javax.annotation.PostConstruct;
@@ -21,9 +19,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 //@Stateless
-public abstract class SimpleDAO<T, K> implements ISimpleDAO<T, K> {
-    public IUser user;
-    protected Session ses;
+public abstract class SimpleDAO<T extends ISimpleAppEntity, K> implements ISimpleDAO<T, K> {
+
     protected Class<T> entityClass;
 
     @PostConstruct
@@ -33,6 +30,7 @@ public abstract class SimpleDAO<T, K> implements ISimpleDAO<T, K> {
 
     @PersistenceContext(unitName = "nb4")
     protected EntityManager em;
+
 
     public T findById(String id) {
         return findById((K) id);
@@ -69,44 +67,55 @@ public abstract class SimpleDAO<T, K> implements ISimpleDAO<T, K> {
     }
 
     @Override
-    public ViewPage findAll(int pageNum, int pageSize) {
+    public ViewPage findViewPage(int pageNum, int pageSize) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        try {
-            CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
-            CriteriaQuery<Long> countCq = builder.createQuery(Long.class);
-            Root<T> root = criteriaQuery.from(entityClass);
-            criteriaQuery.select(root);
-            countCq.select(builder.count(root));
-            //     criteriaQuery.orderBy(builder.asc(root.get("regDate")));
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
+        CriteriaQuery<Long> countCq = builder.createQuery(Long.class);
+        Root<T> root = criteriaQuery.from(entityClass);
+        criteriaQuery.select(root);
+        countCq.select(builder.count(root));
+        //     criteriaQuery.orderBy(builder.asc(root.get("regDate")));
 
-            TypedQuery<T> typedQuery = em.createQuery(criteriaQuery);
-            Query query = em.createQuery(countCq);
-            long count = (long) query.getSingleResult();
-            int maxPage = setupPaging(typedQuery, count, pageNum, pageSize);
+        TypedQuery<T> typedQuery = em.createQuery(criteriaQuery);
+        Query query = em.createQuery(countCq);
+        Long count = (Long) query.getSingleResult();
+        setupPaging(typedQuery, pageNum, pageSize, count);
 
-            List<T> result = typedQuery.getResultList();
-            ViewPage r = new ViewPage(result, count, maxPage, pageNum);
-            return r;
-        } catch (Exception e) {
-            Lg.exception(e);
-        }
-        return null;
+        List<T> result = typedQuery.getResultList();
+        ViewPage r = new ViewPage(entityClass.getSimpleName() + "s", result, count, pageSize, pageNum);
+        return r;
     }
 
 
-    protected int setupPaging(TypedQuery typedQuery, long count, int pageNum, int pageSize) {
-        int maxPage = 1;
+    protected void setupPaging(TypedQuery typedQuery, int pageNum, int pageSize, long count) {
         if (pageNum != 0 || pageSize != 0) {
-            maxPage = DataengineUtil.countMaxPage(count, pageSize);
+
             if (pageNum < 0) {
                 pageNum = 1;
+            } else {
+                int maxPage = countMaxPage(count, pageSize);
+                if (pageNum > maxPage) {
+                    pageNum = maxPage;
+                }
             }
             int firstRec = DataengineUtil.calcStartEntry(pageNum, pageSize);
             typedQuery.setFirstResult(firstRec);
             typedQuery.setMaxResults(pageSize);
         }
-        return maxPage;
+
     }
 
+    public static int countMaxPage(long colCount, int pageSize) {
+        float mp = (float) colCount / (float) pageSize;
+        float d = Math.round(mp);
 
+        int maxPage = (int) d;
+        if (mp > d) {
+            maxPage++;
+        }
+        if (maxPage < 1) {
+            maxPage = 1;
+        }
+        return maxPage;
+    }
 }

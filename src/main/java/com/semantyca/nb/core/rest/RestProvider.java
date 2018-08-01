@@ -1,7 +1,5 @@
 package com.semantyca.nb.core.rest;
 
-import com.semantyca.nb.core.rest.security.Session;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +14,7 @@ public abstract class RestProvider{
     @Context
     protected HttpServletResponse response;
 
-    private Session userSession;
     private WebFormData webFormData;
-
 
 
     protected WebFormData getWebFormData() {

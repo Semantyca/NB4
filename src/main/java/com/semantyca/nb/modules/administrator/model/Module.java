@@ -1,11 +1,12 @@
 package com.semantyca.nb.modules.administrator.model;
 
 import com.semantyca.nb.core.dataengine.jpa.model.SimpleReferenceEntity;
+import com.semantyca.nb.modules.administrator.init.ModuleConst;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "_modules", uniqueConstraints = @UniqueConstraint(columnNames = {"identifier"}))
+@Table(name = ModuleConst.CODE + "__modules", uniqueConstraints = @UniqueConstraint(columnNames = {"identifier"}))
 @NamedQuery(name = "Module.findAll", query = "SELECT m FROM Module AS m ORDER BY m.regDate")
 public class Module extends SimpleReferenceEntity {
 

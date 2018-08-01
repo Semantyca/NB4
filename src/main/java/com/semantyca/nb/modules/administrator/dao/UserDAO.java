@@ -15,6 +15,8 @@ import javax.persistence.criteria.Root;
 @Stateless
 public class UserDAO extends SimpleDAO<User, Long> {
 
+
+
     public ViewPage findViewPage(int pageNum, int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<UserViewEntry> cq = cb.createQuery(UserViewEntry.class);
@@ -38,13 +40,14 @@ public class UserDAO extends SimpleDAO<User, Long> {
             cq.where(condition);
             countRootCq.where(condition);
         }
+        cq.orderBy(cb.desc(root.get("lastModifiedDate")));
 
         TypedQuery<UserViewEntry> typedQuery = em.createQuery(cq);
         TypedQuery<Long> countQuery = em.createQuery(countRootCq);
 
         long count = countQuery.getSingleResult();
-        int maxPage = setupPaging(typedQuery, count, pageNum, pageSize);
-        ViewPage vp = new ViewPage(typedQuery.getResultList(), count, maxPage, pageNum);
+        setupPaging(typedQuery, pageNum, pageSize, count);
+        ViewPage vp = new ViewPage("Users", typedQuery.getResultList(), count, pageSize, pageNum);
         if (vp.getResult().isEmpty()) {
             return vp;
         }

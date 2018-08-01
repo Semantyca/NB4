@@ -83,10 +83,8 @@ public class WebFormData {
 
     @Override
     public String toString() {
-        String result = "-----------properties of the web form data-----------\n";
-
+        String result = "";
         Iterator<String> en = data.keySet().iterator();
-
         while (en.hasNext()) {
             String webFormFieldName = en.next();
             String[] val = data.get(webFormFieldName);
@@ -96,9 +94,6 @@ public class WebFormData {
             }
             result += " " + webFormFieldName + " = " + v + "\n";
         }
-
-        result += "-----------------------------------------------------";
-
         return result;
     }
 
@@ -116,4 +111,7 @@ public class WebFormData {
     }
 
 
+    public int getPageSize() {
+        return getNumberValueSilently("pagesize", EnvConst.DEFAULT_PAGE_SIZE);
+    }
 }

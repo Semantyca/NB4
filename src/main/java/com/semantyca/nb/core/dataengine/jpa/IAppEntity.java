@@ -1,15 +1,13 @@
 package com.semantyca.nb.core.dataengine.jpa;
 
-import com.semantyca.nb.modules.administrator.model.User;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface IAppEntity extends ISimpleAppEntity<UUID> {
 
-    Long getAuthor();
+    void setAuthor(Long author);
 
-    void setLastModifier(User user);
+    Long getAuthor();
 
     LocalDateTime getRegDate();
 
@@ -23,15 +21,16 @@ public interface IAppEntity extends ISimpleAppEntity<UUID> {
 
     String getTitle();
 
-    String getURL();
-
     void setTitle(String title);
 
     default String getType() {
         return this.getClass().getSimpleName();
     }
 
-    boolean isNew();
+    void setRegDate(LocalDateTime regDate);
 
+    void setLastModifiedDate(LocalDateTime lastModifiedDate);
+
+    void setLastModifier(Long lastModifier);
 
 }

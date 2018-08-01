@@ -1,6 +1,7 @@
 package com.semantyca.nb.core.env;
 
 
+import com.semantyca.nb.cli.Console;
 import com.semantyca.nb.localization.Vocabulary;
 
 import javax.annotation.PostConstruct;
@@ -79,7 +80,9 @@ public class Environment {
     }
 
     private static void initProcess() {
-
+        Thread thread = new Thread(new Console());
+        thread.setPriority(Thread.MIN_PRIORITY);
+        thread.start();
     }
 
     private static void loadTemplateSet () {

@@ -8,8 +8,7 @@ import com.semantyca.nb.modules.administrator.init.ModuleConst;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "_langs")
-@NamedQuery(name = "Language.findAll", query = "SELECT m FROM Language AS m ORDER BY m.regDate")
+@Table(name = ModuleConst.CODE + "__langs")
 public class Language extends SimpleReferenceEntity {
 
     @Enumerated(EnumType.STRING)
@@ -50,8 +49,4 @@ public class Language extends SimpleReferenceEntity {
         this.position = position;
     }
 
-    @Override
-    public String getURL() {
-        return ModuleConst.BASE_URL + "languages/" + getId();
-    }
 }

@@ -19,4 +19,13 @@ public class TimeUtil {
         }
     }
 
+    public static LocalDateTime stringToDateTime(String text) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+            return LocalDateTime.parse(text, formatter);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

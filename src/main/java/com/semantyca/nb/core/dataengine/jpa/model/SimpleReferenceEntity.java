@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @MappedSuperclass
-public class SimpleReferenceEntity extends AppEntity  {
+public class SimpleReferenceEntity extends AppEntity{
 
     @Column(length = 128)
     private String identifier;

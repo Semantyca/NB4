@@ -1,13 +1,14 @@
 package com.semantyca.nb.modules.administrator.model;
 
 import com.semantyca.nb.core.dataengine.jpa.model.SimpleAppEntity;
-import com.semantyca.nb.core.dataengine.jpa.model.convertor.LocalDateTimeConverter;
+import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalDateTimeConverter;
+import com.semantyca.nb.modules.administrator.init.ModuleConst;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="_groups")
+@Table(name = ModuleConst.CODE + "__groups")
 public class Group extends SimpleAppEntity {
 
     @Convert(converter = LocalDateTimeConverter.class)

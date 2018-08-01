@@ -1,8 +1,8 @@
 package com.semantyca.nb.modules.administrator.service;
 
+import com.semantyca.nb.core.rest.RestProvider;
 import com.semantyca.nb.core.rest.outgoing.Outcome;
 import com.semantyca.nb.core.rest.security.Session;
-import com.semantyca.nb.core.service.AbstractService;
 import com.semantyca.nb.modules.administrator.init.ModuleConst;
 import com.semantyca.nb.modules.administrator.model.Server;
 
@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 
 @Path(ModuleConst.BASE_URL + "server")
 @RequestScoped
-public class ServerResource extends AbstractService {
+public class ServerResource extends RestProvider {
 
     @Inject
     @Named("AuthenticatedUserSession")
@@ -33,7 +33,7 @@ public class ServerResource extends AbstractService {
         outcome.setTitle("Server");
         outcome.setPayloadTitle("Server");
         Server server = new Server();
-        outcome.addPayload(server);
+        outcome.addPayload("server", server);
 
         return Response.ok(outcome).build();
     }
