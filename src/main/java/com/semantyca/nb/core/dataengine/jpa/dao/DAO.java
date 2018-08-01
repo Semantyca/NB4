@@ -20,17 +20,17 @@ import java.util.List;
 import java.util.UUID;
 
 
-public abstract class DAO<T extends IAppEntity, K> extends SimpleDAO<T, K> implements IDAO<T, K> {
+public abstract class DAO<T extends IAppEntity> extends SimpleDAO<T, UUID> implements IDAO<T, UUID> {
 
     @Inject
     @Named("AuthenticatedUserSession")
     protected Session session;
 
     public T findById(String id){
-        return findById((K)UUID.fromString(id));
+        return findById(UUID.fromString(id));
     }
 
-    public T findById(K id){
+    public T findById(UUID id){
         IUser user = session.getUser();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         boolean isSecureEntity = false;

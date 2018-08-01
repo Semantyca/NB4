@@ -17,8 +17,8 @@ import java.util.Map;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
-public class RoutesTest {
-    private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/AviaTraker/routes";
+public class KMLReaderTest {
+    private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/AviaTraker/explorations";
     private static List<Object> providers = new ArrayList<Object>();
 
     @BeforeClass
@@ -56,7 +56,9 @@ public class RoutesTest {
             if (entity == null) {
                 isNew = true;
             }
-       //     dto.setStatus(EnumUtil.getRndElement(ExplorationStatus.values()));
+          //  ExplorationStatusDAO dao = new ExplorationStatusDAO();
+
+          //  dto.setStatus(EnumUtil.getRndElement(ExplorationStatus.values()));
             dto.setTitle(u);
             Response generalResp = null;
             if (isNew) {

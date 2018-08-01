@@ -8,7 +8,11 @@
     <class>com.semantyca.nb.modules.administrator.model.Group</class>
     <class>com.semantyca.nb.modules.administrator.model.Module</class>
     <class>com.semantyca.nb.modules.administrator.model.Language</class>
-    <class>com.semantyca.aviatraker.modules.operator.model.Route</class>
+
+    <class>com.semantyca.officeframe.modules.reference.model.Country</class>
+    <class>com.semantyca.officeframe.modules.reference.model.ExplorationStatus</class>
+
+    <class>com.semantyca.aviatraker.modules.operator.model.Exploration</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.target-database" value="PostgreSQL" />

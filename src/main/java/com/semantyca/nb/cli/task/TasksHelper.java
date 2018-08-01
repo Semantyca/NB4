@@ -1,6 +1,9 @@
-package com.semantyca.nb.cli;
+package com.semantyca.nb.cli.task;
 
 
+import com.semantyca.nb.cli.Command;
+import com.semantyca.nb.cli.Console;
+import com.semantyca.nb.cli.Trigger;
 import com.semantyca.nb.modules.administrator.dao.ModuleDAO;
 import com.semantyca.nb.modules.administrator.model.Module;
 import com.semantyca.nb.util.ReflectionUtil;

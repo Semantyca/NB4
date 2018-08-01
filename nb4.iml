@@ -7,7 +7,7 @@
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
           <factory-entry name="Entities" />
-          <factory-entry name="nb4" />
+          <factory-entry name="nb4" value="2da8dc4d-7544-41fb-ac22-6bc8573fcccb" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>

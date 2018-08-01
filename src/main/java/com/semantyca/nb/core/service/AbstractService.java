@@ -12,15 +12,25 @@ import com.semantyca.nb.ui.action.ActionBar;
 import com.semantyca.nb.ui.action.ConventionalActionFactory;
 import com.semantyca.nb.ui.view.SortParams;
 import com.semantyca.nb.ui.view.ViewPage;
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 
+import javax.activation.DataHandler;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 import java.util.UUID;
 
 public abstract class AbstractService<T extends IAppEntity> extends RestProvider {
@@ -112,6 +122,46 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
         return Response.ok(outcome).build();
     }
 
+    @POST
+    @Path("uploadFile")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(List<Attachment> attachments, @Context HttpServletRequest request) {
+        for (Attachment attachment : attachments) {
+            DataHandler handler = attachment.getDataHandler();
+            try {
+                InputStream stream = handler.getInputStream();
+                MultivaluedMap<String, String> map = attachment.getHeaders();
+                String temporaryFile = session.getTmpDir().getAbsolutePath() + File.separator + getFileName(map);
+                System.out.println("fileName Here:" + temporaryFile);
+                OutputStream out = new FileOutputStream(new File(temporaryFile));
+
+                int read = 0;
+                byte[] bytes = new byte[1024];
+                while ((read = stream.read(bytes)) != -1) {
+                    out.write(bytes, 0, read);
+                }
+                stream.close();
+                out.flush();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return Response.ok("file uploaded").build();
+    }
+
+    private String getFileName(MultivaluedMap<String, String> header) {
+        String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
+        for (String filename : contentDisposition) {
+            if ((filename.trim().startsWith("filename"))) {
+                String[] name = filename.split("=");
+                String exactFileName = name[1].trim().replaceAll("\"", "");
+                return exactFileName;
+            }
+        }
+        return "unknown";
+    }
 
     private T composeNew(IUser user){
         try {

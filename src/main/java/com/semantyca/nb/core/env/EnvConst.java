@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class EnvConst {
 
     public static final String SERVER_VERSION = "4.0.0";
-    public static final String SERVER_NAME = "nb";
+    public static final String SERVER_NAME = "nb4";
     public static final String FRAMEWORK_LOGO = "nextbase_logo_small.png";
     public static final String MAIN_PACKAGE = "com.semantyca";
     public static final String[] DEFAULT_LANGS = {"ENG", "RUS", "KAZ"};

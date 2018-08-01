@@ -1,6 +1,7 @@
-package com.semantyca.nb.cli;
+package com.semantyca.nb.cli.task;
 
-
+import com.semantyca.nb.cli.Command;
+import com.semantyca.nb.cli.Trigger;
 
 import java.time.LocalDateTime;
 
@@ -26,10 +27,6 @@ public class ServerTaskClass {
 
     public String getId() {
         return command;
-    }
-
-    public String getKind() {
-        return "ServerTaskClass";
     }
 
     public String getAppName() {

@@ -5,5 +5,5 @@
     <converter class="com.semantyca.nb.modules.administrator.model.convertor.LanguageCodeConverter"/>
     <converter class="com.semantyca.nb.modules.administrator.model.convertor.LocalizedValConverter"/>
 
-    <converter class="com.semantyca.aviatraker.modules.operator.model.constants.converter.RouteStatusConvertor"/>
+
 </entity-mappings>

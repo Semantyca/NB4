@@ -1,9 +1,7 @@
 package com.semantyca.nb.cli;
 
 
-import com.semantyca.nb.cli.task.ConsoleTaskRunner;
-import com.semantyca.nb.cli.task.InfoMessageType;
-import com.semantyca.nb.cli.task.ServerTaskOutcome;
+import com.semantyca.nb.cli.task.*;
 import com.semantyca.nb.logger.JavaConsoleLogger;
 import com.semantyca.nb.logger.Lg;
 

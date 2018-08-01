@@ -18,7 +18,7 @@ import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-//@Stateless
+
 public abstract class SimpleDAO<T extends ISimpleAppEntity, K> implements ISimpleDAO<T, K> {
 
     protected Class<T> entityClass;
@@ -63,7 +63,7 @@ public abstract class SimpleDAO<T extends ISimpleAppEntity, K> implements ISimpl
 
     @Override
     public void delete(T entity) {
-
+        em.remove(entity);
     }
 
     @Override

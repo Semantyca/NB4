@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-@Path("files")
+//@Path("files")
 
 public class FileResource extends RestProvider {
 
@@ -48,7 +48,7 @@ public class FileResource extends RestProvider {
             try {
                 InputStream stream = handler.getInputStream();
                 MultivaluedMap<String, String> map = attachment.getHeaders();
-                System.out.println("fileName Here" + getFileName(map));
+                System.out.println("fileName Here" + getFileName(map) + " " + new File("").getAbsolutePath());
                 OutputStream out = new FileOutputStream(new File("/home/aida/IdeaProjects/nb4/tmp/" + getFileName(map)));
 
                 int read = 0;
