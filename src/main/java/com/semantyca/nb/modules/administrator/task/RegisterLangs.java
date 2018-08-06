@@ -11,20 +11,29 @@ import com.semantyca.nb.modules.administrator.init.ModuleConst;
 import com.semantyca.nb.modules.administrator.init.ServerConst;
 import com.semantyca.nb.modules.administrator.model.Language;
 
-//run task adm_register_langs
+import javax.ejb.embeddable.EJBContainer;
+import javax.naming.NamingException;
 
+//run task adm_register_langs
 @Command(name = ModuleConst.CODE + "_register_langs")
 public class RegisterLangs extends Do {
 
     @Override
     public void doTask(Session ses) {
         System.out.println("register languages...");
-        LanguageDAO dao = new LanguageDAO();
-        for (String lc : EnvConst.DEFAULT_LANGS) {
-            Language entity = ServerConst.getLanguage(LanguageCode.valueOf(lc));
-            dao.add(entity);
-            Lg.info(entity.getCode() + " language was added, activated=" + entity.isOn());
+        EJBContainer container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
+        try {
+            LanguageDAO dao = (LanguageDAO)container.getContext().lookup("LanguageDAO");
+            for (String lc : EnvConst.DEFAULT_LANGS) {
+                Language entity = ServerConst.getLanguage(LanguageCode.valueOf(lc));
+                dao.add(entity);
+                Lg.info(entity.getCode() + " language was added, activated=" + entity.isOn());
+            }
+        } catch (NamingException e) {
+            e.printStackTrace();
         }
+
+
         System.out.println("done");
     }
 

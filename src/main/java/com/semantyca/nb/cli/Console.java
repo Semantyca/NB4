@@ -5,6 +5,7 @@ import com.semantyca.nb.cli.task.*;
 import com.semantyca.nb.logger.JavaConsoleLogger;
 import com.semantyca.nb.logger.Lg;
 
+import javax.ejb.EJB;
 import java.util.Scanner;
 
 public class Console implements Runnable {
@@ -13,6 +14,8 @@ public class Console implements Runnable {
     public static final String shortFormat = "%-20s%s%n";
     public static final String advancedFormat = "%-20s%-25s%s%n";
 
+    @EJB
+    TasksHelper taskHelper;
 
     @Override
     public void run() {
@@ -46,14 +49,14 @@ public class Console implements Runnable {
             } else if (command.equalsIgnoreCase("show jvm options") || command.equalsIgnoreCase("sjo")) {
                 Info.showJVMOptions(new JavaConsoleLogger());
             } else if (command.equalsIgnoreCase("show tasks") || command.equalsIgnoreCase("st")) {
-                TasksHelper.getAllTasks(true);
+                taskHelper.getAllTasks(true);
             } else if (command.contains("run task") || command.startsWith("rt")) {
                 String taskCommand = getThirdParameter(command, "run task", "rt");
                 if (taskCommand.trim().isEmpty()) {
                     System.err.println("error -task name is empty");
                 } else {
                     ConsoleTaskRunner ct = new ConsoleTaskRunner();
-                    ServerTaskClass clazz = TasksHelper.getTaskClass(taskCommand);
+                    ServerTaskClass clazz = taskHelper.getTaskClass(taskCommand);
                     if (clazz != null) {
                         ServerTaskOutcome outcome = ct.processCode(clazz);
                         if (outcome.getType() != InfoMessageType.OK) {
