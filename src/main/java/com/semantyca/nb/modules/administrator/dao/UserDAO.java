@@ -5,17 +5,13 @@ import com.semantyca.nb.modules.administrator.dto.UserViewEntry;
 import com.semantyca.nb.modules.administrator.model.User;
 import com.semantyca.nb.ui.view.ViewPage;
 
-import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-@Stateless
 public class UserDAO extends SimpleDAO<User, Long> {
-
-
 
     public ViewPage findViewPage(int pageNum, int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();

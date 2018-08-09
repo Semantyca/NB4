@@ -3,11 +3,12 @@ package com.semantyca.nb.cli;
 import com.semantyca.nb.core.env.EnvConst;
 import com.semantyca.nb.core.env.Environment;
 import com.semantyca.nb.logger.ILogger;
-import org.eclipse.persistence.Version;
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+
+//import org.eclipse.persistence.Version;
 
 public class Info {
 
@@ -19,7 +20,7 @@ public class Info {
         System.out.printf(Console.format, "jvm", System.getProperty("java.version"));
         LocalDateTime now = LocalDateTime.now();
         System.out.printf(Console.format, "server directory", new File("").getAbsolutePath());
-        System.out.printf(Console.format, "JPA", Version.getVersionString());
+        //   System.out.printf(Console.format, "JPA", Version.getVersionString());
         System.out.printf(Console.format, "default language", EnvConst.DEFAULT_LANG);
 
 

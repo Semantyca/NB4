@@ -8,7 +8,6 @@ import com.semantyca.nb.modules.administrator.dao.ModuleDAO;
 import com.semantyca.nb.modules.administrator.model.Module;
 import com.semantyca.nb.util.ReflectionUtil;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,8 +17,6 @@ import java.util.TreeMap;
 /**
  * @author Kayra created 17-10-2016
  */
-
-@EJB(name="task_helper")
 public class TasksHelper {
     private static String TASKS_PACKAGE = ".task";
     private TreeMap<String, ServerTaskClass> tasks;
@@ -34,7 +31,6 @@ public class TasksHelper {
             System.out.printf(Console.advancedFormat, "Application", "Command", "Trigger");
             System.out.printf(Console.advancedFormat, "--------------", "-----", "-------");
         }
-
 
             List<Module> list = dao.findViewPage(0,0).getResult();
 

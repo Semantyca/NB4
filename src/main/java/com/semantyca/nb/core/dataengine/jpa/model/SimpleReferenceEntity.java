@@ -1,8 +1,8 @@
 package com.semantyca.nb.core.dataengine.jpa.model;
 
 
+import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalizedValConverter;
 import com.semantyca.nb.localization.constants.LanguageCode;
-import com.semantyca.nb.modules.administrator.model.convertor.LocalizedValConverter;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;

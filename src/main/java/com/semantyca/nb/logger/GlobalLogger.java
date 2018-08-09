@@ -14,7 +14,7 @@ public class GlobalLogger implements ILogger {
 
     @Override
     public void exception(Exception exception) {
-        System.err.println(exception.toString());
+        //System.err.println(exception.toString());
         logger.log(Level.SEVERE, exception.getMessage(), exception);
     }
 

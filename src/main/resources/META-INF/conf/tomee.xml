@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Resource id="jdbc/nb4" type="DataSource">
-    JdbcDriver org.postgresql.Driver
-    JdbcUrl jdbc:postgresql:localhost:5432/nb4
-    UserName postgres
-    Password pg2016
-    JtaManaged true
+<!--
+<Resource id="nb4Db" type="DataSource">
+    JdbcDriver = org.postgresql.Driver
+    JdbcUrl = jdbc:postgresql:localhost:5432/nb4
+    UserName = postgres
+    Password = pg2016
 </Resource>
+
+<Resource id="nb4DbUnmanaged" type="DataSource">
+    JdbcDriver = org.postgresql.Driver
+    JdbcUrl = jdbc:postgresql:localhost:5432/nb4
+    UserName = postgres
+    Password = pg2016
+    JtaManaged = false
+</Resource>-->
+

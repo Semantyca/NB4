@@ -18,7 +18,7 @@ public class Language extends SimpleReferenceEntity {
     @Column(name = "is_on")
     private boolean isOn;
 
-    private int position;
+    private int disposition;
 
 
     public boolean isOn() {
@@ -41,12 +41,13 @@ public class Language extends SimpleReferenceEntity {
         this.code = LanguageCode.valueOf(id);
     }
 
-    public int getPosition() {
-        return position;
+    public int getDisposition() {
+        return disposition;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
+    public void setDisposition(int position) {
+        this.disposition = position;
     }
+
 
 }

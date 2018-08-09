@@ -1,14 +1,11 @@
 package com.semantyca.nb.core.dataengine.jpa.model;
 
-
 import com.semantyca.nb.core.dataengine.jpa.IAppEntity;
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalDateTimeConverter;
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.UUIDConverter;
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.jaxrs.LocalDateConverter;
 import org.apache.johnzon.mapper.JohnzonConverter;
 import org.apache.johnzon.mapper.JohnzonIgnore;
-import org.eclipse.persistence.annotations.Convert;
-import org.eclipse.persistence.annotations.Converter;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.json.bind.annotation.JsonbDateFormat;
@@ -17,28 +14,27 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
-@Converter(name = "uuidConverter", converterClass = UUIDConverter.class)
 @UuidGenerator(name = "uuid-gen")
 public abstract class AppEntity implements IAppEntity {
 
     @Id
     @GeneratedValue(generator = "uuid-gen")
-    @Convert("uuidConverter")
-    @Column(name = "id", nullable = false)
+    @Convert(converter = UUIDConverter.class)
+    @Column(name = "id", nullable = false, columnDefinition = "uuid", updatable = false)
     @JohnzonConverter(com.semantyca.nb.core.dataengine.jpa.model.convertor.jaxrs.UUIDConverter.class)
-    //@JohnzonIgnore
+    @JohnzonIgnore
     private UUID id;
 
     @JoinColumn(name = "author", nullable = false, updatable = false)
     private Long author;
 
-    @javax.persistence.Convert(converter = LocalDateTimeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     @Column(name = "reg_date", nullable = false, updatable = false)
     @JohnzonConverter(LocalDateConverter.class)
     @JsonbDateFormat("dd.MM.yyyy kk:mm")
     private LocalDateTime regDate;
 
-    @javax.persistence.Convert(converter = LocalDateTimeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     @Column(name = "last_mod_date", nullable = false)
     @JohnzonConverter(LocalDateConverter.class)
     @JsonbDateFormat("dd.MM.yyyy kk:mm")

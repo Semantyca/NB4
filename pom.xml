@@ -6,30 +6,43 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <dependencies>
+
+
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
             <version>2.6.2</version>
         </dependency>
 
+
+        <!--  <dependency>
+              <groupId>org.apache.openjpa</groupId>
+              <artifactId>openjpa</artifactId>
+              <version>3.0.0</version>
+              <scope>provided</scope>
+          </dependency>
+  -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.2</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>8.0</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.johnzon</groupId>
             <artifactId>johnzon-jsonb</artifactId>
             <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
@@ -79,35 +92,26 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
-        </dependency>
 
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-rs-client</artifactId>
-            <version>3.2.5</version>
-            <scope>test</scope>
-        </dependency>
-
+        <!--Testing dependencies-->
         <dependency>
             <groupId>org.apache.johnzon</groupId>
             <artifactId>johnzon-jaxrs</artifactId>
             <version>1.0.0</version>
             <scope>test</scope>
         </dependency>
-
-        <!--<dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-jaxrs</artifactId>
-            <version>1.9.0</version>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
--->
-
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-client</artifactId>
+            <version>3.2.5</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <finalName>nb4</finalName>

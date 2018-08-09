@@ -59,7 +59,7 @@ public class LanguagesTest {
             languageDto.setIdentifier(language.getIdentifier());
             languageDto.setCode(language.getCode());
             languageDto.setOn(true);
-            languageDto.setPosition(language.getPosition());
+            languageDto.setDisposition(language.getDisposition());
             languageDto.setLocName(language.getLocName());
             languageDto.setTitle(language.getTitle());
             Response generalResp = null;
