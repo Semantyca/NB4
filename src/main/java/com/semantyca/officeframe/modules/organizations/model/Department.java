@@ -1,29 +1,27 @@
-package com.semantyca.officeframe.modules.organization.model;
+package com.semantyca.officeframe.modules.organizations.model;
 
-import com.exponentus.common.model.SimpleReferenceEntity;
-import com.exponentus.common.model.util.EmployeeConverter;
-import com.fasterxml.jackson.annotation.JsonInclude;
+
+import com.semantyca.nb.core.dataengine.jpa.model.SimpleReferenceEntity;
+import com.semantyca.officeframe.modules.organizations.init.ModuleConst;
+import com.semantyca.officeframe.modules.organizations.model.converter.DepartmentConverter;
+import com.semantyca.officeframe.modules.organizations.model.converter.EmployeeConverter;
+import com.semantyca.officeframe.modules.reference.model.DepartmentType;
 import org.eclipse.persistence.annotations.Convert;
 import org.eclipse.persistence.annotations.Converter;
 import org.eclipse.persistence.annotations.Converters;
-import reference.model.DepartmentType;
-import staff.init.ModuleConst;
-import staff.model.util.DepartmentConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "staff__departments", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "organization_id"}))
+@Table(name = ModuleConst.CODE + "__departments", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "organization_id"}))
 @Converters({@Converter(name = "dep_conv", converterClass = DepartmentConverter.class),
         @Converter(name = "emp_conv", converterClass = EmployeeConverter.class)})
-@NamedQuery(name = "Department.findAll", query = "SELECT m FROM Department AS m ORDER BY m.regDate")
 public class Department extends SimpleReferenceEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
-    private DepartmentType type;
+    private DepartmentType departmentType;
 
     @NotNull
     @ManyToOne(optional = true)
@@ -64,12 +62,12 @@ public class Department extends SimpleReferenceEntity {
         this.boss = boss;
     }
 
-    public DepartmentType getType() {
-        return type;
+    public DepartmentType getDepartmentType() {
+        return departmentType;
     }
 
-    public void setType(DepartmentType type) {
-        this.type = type;
+    public void setDepartmentType(DepartmentType departmentType) {
+        this.departmentType = departmentType;
     }
 
     public int getRank() {
@@ -80,8 +78,5 @@ public class Department extends SimpleReferenceEntity {
         this.rank = rank;
     }
 
-    @Override
-    public String getURL() {
-        return ModuleConst.BASE_URL + "departments/" + getId();
-    }
+
 }

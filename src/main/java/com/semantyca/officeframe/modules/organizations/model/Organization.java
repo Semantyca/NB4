@@ -1,8 +1,7 @@
-package com.semantyca.officeframe.modules.organization.model;
-
+package com.semantyca.officeframe.modules.organizations.model;
 
 import com.semantyca.nb.core.dataengine.jpa.model.SimpleReferenceEntity;
-import com.semantyca.officeframe.modules.organization.init.ModuleConst;
+import com.semantyca.officeframe.modules.organizations.init.ModuleConst;
 import com.semantyca.officeframe.modules.reference.model.OrgCategory;
 
 import javax.persistence.*;

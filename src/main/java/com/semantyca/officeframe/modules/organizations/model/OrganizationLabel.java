@@ -1,9 +1,9 @@
-package com.semantyca.officeframe.modules.organization.model;
+package com.semantyca.officeframe.modules.organizations.model;
 
 import com.semantyca.nb.core.dataengine.jpa.model.SimpleReferenceEntity;
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalizedValConverter;
 import com.semantyca.nb.localization.constants.LanguageCode;
-import com.semantyca.officeframe.modules.organization.init.ModuleConst;
+import com.semantyca.officeframe.modules.organizations.init.ModuleConst;
 
 import javax.persistence.*;
 import java.util.List;

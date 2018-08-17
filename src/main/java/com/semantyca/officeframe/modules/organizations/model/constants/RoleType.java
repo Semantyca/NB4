@@ -1,4 +1,4 @@
-package com.semantyca.officeframe.modules.organization.model.constants;
+package com.semantyca.officeframe.modules.organizations.model.constants;
 
 /**
  * https://en.wikipedia.org/wiki/ISO_3166-2

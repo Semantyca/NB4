@@ -1,11 +1,11 @@
-package com.semantyca.officeframe.modules.organization.model;
+package com.semantyca.officeframe.modules.organizations.model;
 
 
 import com.semantyca.nb.core.dataengine.jpa.model.SimpleReferenceEntity;
 import com.semantyca.nb.core.user.IUser;
 import com.semantyca.nb.modules.administrator.model.User;
-import com.semantyca.officeframe.modules.organization.init.ModuleConst;
-import com.semantyca.officeframe.modules.organization.model.constants.RoleType;
+import com.semantyca.officeframe.modules.organizations.init.ModuleConst;
+import com.semantyca.officeframe.modules.organizations.model.constants.RoleType;
 import com.semantyca.officeframe.modules.reference.model.Position;
 import org.eclipse.persistence.annotations.Cache;
 import org.eclipse.persistence.annotations.Convert;

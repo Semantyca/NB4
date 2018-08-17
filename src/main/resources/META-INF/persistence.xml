@@ -17,6 +17,14 @@
 
         <class>com.semantyca.officeframe.modules.reference.model.Country</class>
         <class>com.semantyca.officeframe.modules.reference.model.ExplorationStatus</class>
+        <class>com.semantyca.officeframe.modules.reference.model.OrgCategory</class>
+        <class>com.semantyca.officeframe.modules.reference.model.Position</class>
+        <class>com.semantyca.officeframe.modules.reference.model.DepartmentType</class>
+        <class>com.semantyca.officeframe.modules.organizations.model.Organization</class>
+        <class>com.semantyca.officeframe.modules.organizations.model.Department</class>
+        <class>com.semantyca.officeframe.modules.organizations.model.Employee</class>
+        <class>com.semantyca.officeframe.modules.organizations.model.OrganizationLabel</class>
+        <class>com.semantyca.officeframe.modules.organizations.model.Role</class>
 
         <class>com.semantyca.skyra.modules.operator.model.Exploration</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
