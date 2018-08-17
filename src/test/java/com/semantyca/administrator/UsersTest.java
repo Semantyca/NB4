@@ -66,7 +66,6 @@ public class UsersTest {
 
     @Test
     public void addUsers() throws Exception {
-        System.out.println("POST");
 
         List<String> data = new ArrayList();
 
@@ -74,9 +73,9 @@ public class UsersTest {
             data.add(StringUtil.getRndText());
         }
 
-        for (String u: data) {
+        for (String login : data) {
             boolean isNew = false;
-            Response resp = WebClient.create(BASE_SERVICE_URL + "/" + u, providers)
+            Response resp = WebClient.create(BASE_SERVICE_URL + "/" + login, providers)
                     .accept(MediaType.APPLICATION_JSON)
                     .get(Response.class);
 
@@ -91,23 +90,26 @@ public class UsersTest {
                 }
             }
 
-            User user = new User();
+            User user = null;
             if (entity == null) {
                 isNew = true;
+                user = new User();
             }
-            user.setLogin(u);
+            user.setLogin(login);
             user.setStatus(UserStatusCode.TEMPORARY);
             user.setDefaultLang(EnvConst.getDefaultLang());
-            user.setEmail(u + "@bla.com");
+            user.setEmail(login + "@bla.com");
             user.setPassword("123");
 
             Response generalResp = null;
             if (isNew) {
+                System.out.println("POST");
                 generalResp = WebClient.create(BASE_SERVICE_URL, providers)
                         .accept(MediaType.APPLICATION_JSON)
                         .type(MediaType.APPLICATION_JSON)
                         .post(user, Response.class);
             } else {
+                System.out.println("PUT");
                 generalResp = WebClient.create(BASE_SERVICE_URL, providers)
                         .accept(MediaType.APPLICATION_JSON)
                         .put(user, Response.class);

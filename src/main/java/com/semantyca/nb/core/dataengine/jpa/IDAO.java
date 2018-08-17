@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IDAO<T, K> extends ISimpleDAO<T, K> {
 
+
     List<T> findAll(IFilter<T> filter);
 
     List<T> findAll(IFilter<T> filter, SortParams sort);

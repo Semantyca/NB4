@@ -43,13 +43,12 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
 
     @PostConstruct
     public void init() {
-       // Class entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-       // dao = DAOFactory.get(entityClass);
+        // Class entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        // dao = DAOFactory.get(entityClass);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response getViewPage() {
         IUser user = session.getUser();
         Outcome outcome = new Outcome();
@@ -82,10 +81,10 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
     public Response get(@PathParam("id") String id) {
         Outcome outcome = new Outcome();
         T entity = null;
-        if ("new".equalsIgnoreCase(id)){
+        if ("new".equalsIgnoreCase(id)) {
             entity = composeNew(session.getUser());
             outcome.setTitle("New");
-        }else {
+        } else {
             try {
                 entity = getDao().findById(id);
                 outcome.setTitle(entity.getTitle());
@@ -122,6 +121,14 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
         return Response.ok(outcome).build();
     }
 
+    @DELETE
+    @Path("{id}")
+    public Response delete(@PathParam("id") String id) {
+        T entity = getEntity(id);
+        getDao().delete(entity);
+        return Response.noContent().build();
+    }
+
     @POST
     @Path("uploadFile")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -151,6 +158,15 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
         return Response.ok("file uploaded").build();
     }
 
+    public T getEntity(String id) {
+        boolean isNew = "new".equals(id);
+        if (isNew) {
+            return composeNew(session.getUser());
+        } else {
+            return getDao().findById(UUID.fromString(id));
+        }
+    }
+
     private String getFileName(MultivaluedMap<String, String> header) {
         String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
         for (String filename : contentDisposition) {
@@ -163,7 +179,7 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
         return "unknown";
     }
 
-    private T composeNew(IUser user){
+    private T composeNew(IUser user) {
         try {
             Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
             T entityInst = entityClass.getConstructor().newInstance();

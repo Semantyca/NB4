@@ -2,8 +2,11 @@ package com.semantyca.nb.util;
 
 import com.semantyca.nb.core.env.EnvConst;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class TimeUtil {
@@ -26,6 +29,28 @@ public class TimeUtil {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    //needs to tune
+    public static LocalDate getRndDate() {
+        int year = NumberUtil.getRandomNumber(1900, 2017);
+        int month = NumberUtil.getRandomNumber(1, 12);
+        return LocalDate.of(year, month, NumberUtil.getRandomNumber(1, 30));
+
+    }
+
+    public static LocalDateTime getRndDateTime() {
+        int year = NumberUtil.getRandomNumber(1900, 2017);
+        int month = NumberUtil.getRandomNumber(1, 12);
+        int hour = NumberUtil.getRandomNumber(0, 24);
+        int min = NumberUtil.getRandomNumber(0, 60);
+        return LocalDateTime.of(year, month, NumberUtil.getRandomNumber(1, 30), hour, min);
+
+    }
+
+    public static Date getRndDateBetween(Date from, Date to) {
+        long random = ThreadLocalRandom.current().nextLong(from.getTime(), to.getTime());
+        return new Date(random);
     }
 
 }

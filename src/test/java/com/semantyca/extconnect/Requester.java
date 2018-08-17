@@ -1,7 +1,7 @@
 package com.semantyca.extconnect;
 
 
-import com.semantyca.administrator.com.semantyca.extconnect.httpclient.ClientProvider;
+import com.semantyca.administrator.extconnect.httpclient.ClientProvider;
 import com.semantyca.nb.logger.Lg;
 
 import javax.ws.rs.HttpMethod;

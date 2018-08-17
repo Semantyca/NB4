@@ -75,7 +75,12 @@ public class UsersResource extends RestProvider {
             outcome.setTitle("New user");
         }else {
             try {
-                user = dao.findById(id);
+                try {
+                    Long idAsLong = Long.parseLong(id);
+                    user = dao.findById(id);
+                } catch (NumberFormatException e) {
+                    user = dao.findByLogin(id);
+                }
                 outcome.setTitle("User " + user.getLogin());
             } catch (Exception e) {
                 outcome.addPayload(e);

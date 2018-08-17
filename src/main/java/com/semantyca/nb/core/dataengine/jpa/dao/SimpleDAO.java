@@ -63,6 +63,7 @@ public abstract class SimpleDAO<T extends ISimpleAppEntity, K> implements ISimpl
 
     @Override
     public void delete(T entity) {
+        entity = em.merge(entity);
         em.remove(entity);
     }
 

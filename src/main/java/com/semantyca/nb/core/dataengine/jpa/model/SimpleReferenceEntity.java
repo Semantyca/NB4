@@ -13,7 +13,7 @@ import java.util.Map;
 @MappedSuperclass
 public class SimpleReferenceEntity extends AppEntity{
 
-    @Column(length = 128)
+    @Column(length = 128, nullable = false)
     private String identifier;
 
     @Convert(converter = LocalizedValConverter.class)

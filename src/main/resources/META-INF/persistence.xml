@@ -18,14 +18,14 @@
         <class>com.semantyca.officeframe.modules.reference.model.Country</class>
         <class>com.semantyca.officeframe.modules.reference.model.ExplorationStatus</class>
 
-        <class>com.semantyca.aviatraker.modules.operator.model.Exploration</class>
+        <class>com.semantyca.skyra.modules.operator.model.Exploration</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="eclipselink.target-database" value="PostgreSQL"/>
             <!--<property name="eclipselink.target-database" value="HSQL"/>-->
             <!--<property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>-->
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create-tables"/>
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
+
+            <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
             <property name="eclipselink.ddl-generation.output-mode" value="both"/>
             <property name="eclipselink.deploy-on-startup" value="true"/>
             <!-- The warning log of "Problem while registering MBean: java.lang.NullPointerException" did not go away even if I set bellow 2 propertes -->

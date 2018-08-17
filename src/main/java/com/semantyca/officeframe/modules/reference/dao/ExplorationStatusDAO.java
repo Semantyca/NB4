@@ -2,6 +2,9 @@ package com.semantyca.officeframe.modules.reference.dao;
 
 import com.semantyca.officeframe.modules.reference.model.ExplorationStatus;
 
-public abstract class ExplorationStatusDAO extends ReferenceDAO<ExplorationStatus> {
+import javax.ejb.Stateless;
+
+@Stateless
+public class ExplorationStatusDAO extends ReferenceDAO<ExplorationStatus> {
 
 }

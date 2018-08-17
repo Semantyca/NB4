@@ -8,6 +8,7 @@ import com.semantyca.nb.core.dataengine.jpa.model.ISecureAppEntity;
 import com.semantyca.nb.core.dataengine.jpa.model.embedded.Reader;
 import com.semantyca.nb.core.rest.security.Session;
 import com.semantyca.nb.core.user.IUser;
+import com.semantyca.nb.logger.Lg;
 import com.semantyca.nb.ui.view.SortParams;
 import com.semantyca.nb.ui.view.ViewPage;
 
@@ -27,7 +28,12 @@ public abstract class DAO<T extends IAppEntity> extends SimpleDAO<T, UUID> imple
     protected Session session;
 
     public T findById(String id){
-        return findById(UUID.fromString(id));
+        try {
+            return findById(UUID.fromString(id));
+        } catch (IllegalArgumentException e) {
+            Lg.error(e.toString());
+            return null;
+        }
     }
 
     public T findById(UUID id){
@@ -89,7 +95,9 @@ public abstract class DAO<T extends IAppEntity> extends SimpleDAO<T, UUID> imple
         LocalDateTime now = LocalDateTime.now();
         entity.setRegDate(now);
         entity.setLastModifiedDate(now);
-        entity.setLastModifier(session.getUser().getId());
+        Long currenUserId = session.getUser().getId();
+        entity.setLastModifier(currenUserId);
+        entity.setAuthor(currenUserId);
         em.persist(entity);
         return entity;
     }

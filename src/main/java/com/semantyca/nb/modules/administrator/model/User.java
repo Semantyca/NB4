@@ -1,7 +1,7 @@
 package com.semantyca.nb.modules.administrator.model;
 
 import com.semantyca.nb.core.dataengine.jpa.model.SimpleAppEntity;
-import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalDateTimeConverter;
+import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalDateTimeDbConverter;
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.jaxrs.LocalDateConverter;
 import com.semantyca.nb.core.env.EnvConst;
 import com.semantyca.nb.core.user.IUser;
@@ -27,15 +27,13 @@ public class User extends SimpleAppEntity implements IUser {
     @Column(name="email", nullable=false)
     private String email;
 
-    @Convert(converter = LocalDateTimeConverter.class)
-    //@Convert(converter = LocalDateTimeAttributeConverter.class)
+    @Convert(converter = LocalDateTimeDbConverter.class)
     @JohnzonConverter(LocalDateConverter.class)
     @JsonbDateFormat("dd.MM.yyyy kk:mm")
     @Column(name = "reg_date", nullable = false, updatable = false)
     protected LocalDateTime regDate;
 
-    @Convert(converter = LocalDateTimeConverter.class)
-    //@Convert(converter = LocalDateTimeAttributeConverter.class)
+    @Convert(converter = LocalDateTimeDbConverter.class)
     @JohnzonConverter(LocalDateConverter.class)
     @JsonbDateFormat("dd.MM.yyyy kk:mm")
     @Column(name = "last_mod_date", nullable = false, updatable = false)
@@ -45,7 +43,7 @@ public class User extends SimpleAppEntity implements IUser {
     @JohnzonIgnore
     private String password;
 
-    @Column(name="identifier", nullable=false, length = 64)
+    @Column(nullable = false, length = 64)
     private String login;
 
     @Convert(converter = UserStatusCodeConverter.class)
