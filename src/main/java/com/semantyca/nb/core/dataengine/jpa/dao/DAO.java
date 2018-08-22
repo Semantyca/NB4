@@ -15,6 +15,7 @@ import com.semantyca.nb.ui.view.ViewPage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,7 +32,7 @@ public abstract class DAO<T extends IAppEntity> extends SimpleDAO<T, UUID> imple
         try {
             return findById(UUID.fromString(id));
         } catch (IllegalArgumentException e) {
-            Lg.error(e.toString());
+            Lg.error("Invalid ID=" + id + ", entity has not been found");
             return null;
         }
     }
@@ -61,6 +62,18 @@ public abstract class DAO<T extends IAppEntity> extends SimpleDAO<T, UUID> imple
         return entity;
 
     }
+
+    public T findByIdentifier(String identifier) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(entityClass);
+        Root<T> c = cq.from(entityClass);
+        cq.select(c);
+        Predicate condition = cb.equal(cb.lower(c.get("identifier")), identifier.toLowerCase());
+        cq.where(condition);
+        TypedQuery<T> typedQuery = em.createQuery(cq);
+        return typedQuery.getSingleResult();
+    }
+
 
     @Override
     public List<T> findAll(IFilter<T> filter) {

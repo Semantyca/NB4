@@ -17,12 +17,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = ModuleConst.CODE + "__employees", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "organization_id"}),
+@Table(name = ModuleConst.CODE + "__employees", uniqueConstraints = {@UniqueConstraint(columnNames = {"identifier", "organization_id"}),
         @UniqueConstraint(columnNames = {"user_id", "organization_id"})})
 @Cache(refreshOnlyIfNewer = true)
 public class Employee extends SimpleReferenceEntity {
 
-    @OneToOne(cascade = {CascadeType.MERGE}, optional = false, fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.DETACH}, optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

@@ -8,12 +8,14 @@ import com.semantyca.nb.ui.workspace.IconSet;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @XmlRootElement
 public class Outcome {
     public static final String STRING_PAYLOAD = "text";
     public static final String ENTITY_PAYLOAD = "entity";
     public static final String VIEW_PAGE_PAYLOAD = "view";
+    public static final String ENTITY_LIST_PAYLOAD = "list";
     public static final String ACTION_BAR_PAYLOAD = "actions";
     public static final String EXCEPTION_PAYLOAD = "error";
     public static final String ICONS_SET_PAYLOAD = "icons";
@@ -71,6 +73,11 @@ public class Outcome {
         return this;
     }
 
+    public <T> Outcome addPayload(List<T> list) {
+        payload.put(ENTITY_LIST_PAYLOAD, list);
+        return this;
+    }
+
     public Outcome addPayload(ActionBar actionBar) {
         payload.put(ACTION_BAR_PAYLOAD, actionBar);
         return this;
@@ -90,4 +97,6 @@ public class Outcome {
         payload.put(STRING_PAYLOAD, s);
         return this;
     }
+
+
 }

@@ -13,15 +13,15 @@ public class Reader {
     @Column(name = "reading_time")
     private Date readingTime;
 
-    @Column(nullable = false, name="readers")
-    private Long reader;
+    @Column(nullable = false, name = "user_id")
+    private Long user;
 
-    public Long getReader() {
-        return reader;
+    public Long getUser() {
+        return user;
     }
 
-    public void setReader(Long reader) {
-        this.reader = reader;
+    public void setUser(Long reader) {
+        this.user = reader;
     }
 
     public boolean isWasRead() {

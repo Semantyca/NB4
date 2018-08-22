@@ -1,13 +1,12 @@
 package com.semantyca.administrator;
 
+import com.semantyca.AbstractTest;
 import com.semantyca.nb.core.env.EnvConst;
 import com.semantyca.nb.core.rest.outgoing.Outcome;
 import com.semantyca.nb.core.user.constants.UserStatusCode;
 import com.semantyca.nb.modules.administrator.model.User;
 import com.semantyca.nb.util.StringUtil;
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.apache.johnzon.jaxrs.ConfigurableJohnzonProvider;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -21,46 +20,18 @@ import java.util.Map;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
-public class UsersTest {
+public class UsersTest extends AbstractTest<User> {
     private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/Administrator/users";
-    private static List<Object> providers = new ArrayList<Object>();
 
     @Rule
     public Timeout globalTimeout = Timeout.seconds(5);
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-         providers.add(new ConfigurableJohnzonProvider());
-    }
-
-    @Test
-    public void getUsers() throws Exception {
-        System.out.println("GET");
-        Response resp = WebClient.create(BASE_SERVICE_URL, providers)
-                .accept(MediaType.APPLICATION_JSON)
-                .get(Response.class);
-
-        int status = resp.getStatus();
-        assertEquals(200, status);
-        if (status == 200) {
-            Outcome outcome = resp.readEntity(Outcome.class);
-
-            Map entity = (Map) outcome.getPayload().get("viewpage");
-            assertNotNull(entity);
-            System.out.println("Response: " + entity);
-        }
-    }
 
     @Test
     public void getUser() throws Exception {
-        String id = "test1";
-        Response resp = WebClient.create(BASE_SERVICE_URL + "/" + id, providers)
-                .accept(MediaType.APPLICATION_JSON)
-                .get(Response.class);
-
-        Outcome outcome = resp.readEntity(Outcome.class);
-
-        Map entity = (Map) outcome.getPayload().get(Outcome.ENTITY_PAYLOAD);
+        String id = "l1cglp1ri1";
+        User entity = getEntity(BASE_SERVICE_URL + "/" + id);
+        System.out.println(entity);
         assertNotNull(entity);
     }
 
@@ -121,5 +92,13 @@ public class UsersTest {
                 assertNotNull(generalOutcome);
             }
         }
+    }
+
+    public List<User> getUsers() {
+        return getEntities(BASE_SERVICE_URL);
+    }
+
+    public User getUser(String login) {
+        return getEntity(BASE_SERVICE_URL + "/" + login);
     }
 }

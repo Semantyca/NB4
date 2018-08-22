@@ -33,4 +33,13 @@ public interface IAppEntity extends ISimpleAppEntity<UUID> {
 
     void setLastModifier(Long lastModifier);
 
+    default String getIdentifier() {
+        UUID id = getId();
+        if (id != null) {
+            return getId().toString();
+        } else {
+            return "undefined";
+        }
+    }
+
 }

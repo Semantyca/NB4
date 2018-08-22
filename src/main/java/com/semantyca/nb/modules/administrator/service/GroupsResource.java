@@ -50,7 +50,7 @@ public class GroupsResource extends RestProvider {
 
         if (user.isSuperUser()) {
             ConventionalActionFactory action = new ConventionalActionFactory();
-            ActionBar actionBar = new ActionBar(session);
+            ActionBar actionBar = new ActionBar();
             actionBar.addAction(action.addNew);
             actionBar.addAction(action.deleteDocument);
             actionBar.addAction(action.refreshVew);

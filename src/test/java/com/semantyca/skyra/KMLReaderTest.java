@@ -4,8 +4,6 @@ import com.semantyca.nb.core.rest.outgoing.Outcome;
 import com.semantyca.nb.util.StringUtil;
 import com.semantyca.skyra.modules.operator.model.Exploration;
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.apache.johnzon.jaxrs.ConfigurableJohnzonProvider;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
@@ -21,10 +19,6 @@ public class KMLReaderTest {
     private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/AviaTraker/explorations";
     private static List<Object> providers = new ArrayList<Object>();
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        providers.add(new ConfigurableJohnzonProvider());
-    }
 
 
     @Test

@@ -31,6 +31,16 @@ public abstract class SimpleDAO<T extends ISimpleAppEntity, K> implements ISimpl
     @PersistenceContext(unitName = "nb4")
     protected EntityManager em;
 
+    @Override
+    public List<T> findAll() {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityClass);
+        Root<T> root = criteriaQuery.from(entityClass);
+        criteriaQuery.select(root);
+        TypedQuery<T> typedQuery = em.createQuery(criteriaQuery);
+        List<T> result = typedQuery.getResultList();
+        return result;
+    }
 
     public T findById(String id) {
         return findById((K) id);
@@ -57,7 +67,7 @@ public abstract class SimpleDAO<T extends ISimpleAppEntity, K> implements ISimpl
 
     @Override
     public T update(T entity) {
-        em.merge(entity);
+        entity = em.merge(entity);
         return entity;
     }
 
@@ -75,7 +85,7 @@ public abstract class SimpleDAO<T extends ISimpleAppEntity, K> implements ISimpl
         Root<T> root = criteriaQuery.from(entityClass);
         criteriaQuery.select(root);
         countCq.select(builder.count(root));
-        //     criteriaQuery.orderBy(builder.asc(root.get("regDate")));
+        criteriaQuery.orderBy(builder.desc(root.get("regDate")));
 
         TypedQuery<T> typedQuery = em.createQuery(criteriaQuery);
         Query query = em.createQuery(countCq);

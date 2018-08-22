@@ -1,5 +1,5 @@
 package com.semantyca.nb.core.dataengine.jpa.model.convertor.jaxrs;
-
+/*
 import org.apache.johnzon.mapper.Converter;
 
 import java.time.LocalDateTime;
@@ -34,4 +34,4 @@ public class LocalDateTimeJSONConverter implements Converter<LocalDateTime> {
             return null;
         }
     }
-}
+}*/

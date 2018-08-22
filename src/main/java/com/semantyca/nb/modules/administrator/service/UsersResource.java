@@ -49,7 +49,7 @@ public class UsersResource extends RestProvider {
 
         if (user.isSuperUser()) {
             ConventionalActionFactory action = new ConventionalActionFactory();
-            ActionBar actionBar = new ActionBar(session);
+            ActionBar actionBar = new ActionBar();
             actionBar.addAction(action.addNew);
             actionBar.addAction(action.deleteDocument);
             actionBar.addAction(action.refreshVew);
@@ -66,7 +66,6 @@ public class UsersResource extends RestProvider {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") String id) {
         Outcome outcome = new Outcome();
         User user = null;

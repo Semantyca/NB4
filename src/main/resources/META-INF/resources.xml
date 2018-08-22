@@ -1,18 +1,4 @@
 <resources>
-    <!--<Resource id="nb4Db" type="DataSource">
-        JdbcDriver = org.hsqldb.jdbcDriver
-        JdbcUrl = jdbc:hsqldb:file:/home/aida/HSQL_db/test
-        UserName = SA
-        Password = 123
-    </Resource>
-
-    <Resource id="nb4DbUnmanaged" type="DataSource">
-        JdbcDriver = org.hsqldb.jdbcDriver
-        JdbcUrl = jdbc:hsqldb:file:/home/aida/HSQL_db/test
-        UserName = SA
-        Password = 123
-        JtaManaged = false
-    </Resource>-->
 
     <Resource id="nb4Db" type="DataSource">
         JdbcDriver = org.postgresql.Driver

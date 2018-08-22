@@ -11,7 +11,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Cacheable(true)
-@Table(name = ModuleConst.CODE + "__org_categories", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+@Table(name = ModuleConst.CODE + "__org_categories", uniqueConstraints = @UniqueConstraint(columnNames = {"identifier"}))
 public class OrgCategory extends SimpleReferenceEntity {
 
 }

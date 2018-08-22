@@ -6,6 +6,7 @@ import com.semantyca.nb.core.page.XMLPage;
 import com.semantyca.nb.logger.Lg;
 
 import java.io.*;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -99,6 +100,18 @@ public class ReflectionUtil {
             Lg.error("incorrect path " + pack);
         }
         return classes;
+    }
+
+
+    public static boolean isMethodExist(String methodName, Class clazz) {
+        Method m = null;
+        try {
+            m = clazz.getMethod(methodName);
+            return true;
+        } catch (Exception e) {
+            // doesn't matter
+        }
+        return false;
     }
 
 }

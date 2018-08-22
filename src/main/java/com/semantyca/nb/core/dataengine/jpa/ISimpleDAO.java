@@ -3,7 +3,11 @@ package com.semantyca.nb.core.dataengine.jpa;
 
 import com.semantyca.nb.ui.view.ViewPage;
 
+import java.util.List;
+
 public interface ISimpleDAO<T, K> {
+
+    List<T> findAll();
 
     T findById(String id);
 

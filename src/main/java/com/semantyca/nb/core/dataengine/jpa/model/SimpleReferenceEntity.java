@@ -1,6 +1,5 @@
 package com.semantyca.nb.core.dataengine.jpa.model;
 
-
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalizedValConverter;
 import com.semantyca.nb.localization.constants.LanguageCode;
 
@@ -35,9 +34,7 @@ public class SimpleReferenceEntity extends AppEntity{
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
-        super.setTitle(identifier);
     }
-
 
     public Map<LanguageCode, String> getLocName() {
         return locName;

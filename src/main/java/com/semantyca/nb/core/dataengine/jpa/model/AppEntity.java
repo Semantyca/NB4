@@ -1,14 +1,16 @@
 package com.semantyca.nb.core.dataengine.jpa.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.semantyca.nb.core.dataengine.jpa.IAppEntity;
+import com.semantyca.nb.core.dataengine.jpa.model.constant.ExistenceState;
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalDateTimeDbConverter;
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.eclipselink.ELUUIDConverter;
-import com.semantyca.nb.core.dataengine.jpa.model.convertor.jaxrs.LocalDateConverter;
-import org.apache.johnzon.mapper.JohnzonConverter;
-import org.apache.johnzon.mapper.JohnzonIgnore;
+import com.semantyca.nb.core.rest.serializer.CustomDateTimeDeserializer;
+import com.semantyca.nb.core.rest.serializer.CustomDateTimeSerializer;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
-import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -16,13 +18,13 @@ import java.util.UUID;
 @MappedSuperclass
 @org.eclipse.persistence.annotations.Converter(name = "uuidConverter", converterClass = ELUUIDConverter.class)
 @UuidGenerator(name = "uuid-gen")
+@JsonPropertyOrder({"type", "id", "existenceState", "title", "regDate", "wasRead", "authorId", "editable"})
 public abstract class AppEntity implements IAppEntity {
 
     @Id
     @GeneratedValue(generator = "uuid-gen")
     @org.eclipse.persistence.annotations.Convert("uuidConverter")
     @Column(name = "id", nullable = false, columnDefinition = "uuid", updatable = false)
-    @JohnzonConverter(com.semantyca.nb.core.dataengine.jpa.model.convertor.jaxrs.UUIDConverter.class)
     private UUID id;
 
     @Column(name = "author", nullable = false, updatable = false)
@@ -30,14 +32,14 @@ public abstract class AppEntity implements IAppEntity {
 
     @Convert(converter = LocalDateTimeDbConverter.class)
     @Column(name = "reg_date", nullable = false, updatable = false)
-    @JohnzonConverter(LocalDateConverter.class)
-    @JsonbDateFormat("dd.MM.yyyy kk:mm")
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
     private LocalDateTime regDate;
 
     @Convert(converter = LocalDateTimeDbConverter.class)
     @Column(name = "last_mod_date", nullable = false)
-    @JohnzonConverter(LocalDateConverter.class)
-    @JsonbDateFormat("dd.MM.yyyy kk:mm")
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
     private LocalDateTime lastModifiedDate = LocalDateTime.now();
 
     @Column(name = "last_mod_user", nullable = false)
@@ -51,8 +53,7 @@ public abstract class AppEntity implements IAppEntity {
     @Transient
     private boolean wasRead = true;
 
-    @Transient
-    private boolean deleted;
+    private ExistenceState existenceState;
 
     public void setId(UUID id) {
         this.id = id;
@@ -63,7 +64,6 @@ public abstract class AppEntity implements IAppEntity {
         return id;
     }
 
-    @JohnzonIgnore
     public void setAuthor(Long author) {
         this.author = author;
     }
@@ -83,7 +83,6 @@ public abstract class AppEntity implements IAppEntity {
         return regDate;
     }
 
-    @JohnzonIgnore
     public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
@@ -92,7 +91,6 @@ public abstract class AppEntity implements IAppEntity {
         return lastModifiedDate;
     }
 
-    @JohnzonIgnore
     public void setLastModifier(Long lastModifier) {
         this.lastModifier = lastModifier;
     }
@@ -120,10 +118,10 @@ public abstract class AppEntity implements IAppEntity {
         this.title = title;
     }
 
-    @Override
-    public boolean isNew() {
-        return id == null;
+    public void setNew(boolean aNew) {
+        if (aNew) id = null;
     }
+
 
     @Override
     public boolean isEditable() {
@@ -143,12 +141,12 @@ public abstract class AppEntity implements IAppEntity {
         this.wasRead = wasRead;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    @Override
+    public ExistenceState getExistenceState() {
+        return existenceState;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public void setExistenceState(ExistenceState existenceState) {
+        this.existenceState = existenceState;
     }
-
 }

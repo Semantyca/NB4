@@ -1,8 +1,11 @@
 package com.semantyca.nb.modules.administrator.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.semantyca.nb.core.dataengine.jpa.model.SimpleAppEntity;
 import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalDateTimeDbConverter;
-import com.semantyca.nb.core.dataengine.jpa.model.convertor.jaxrs.LocalDateConverter;
 import com.semantyca.nb.core.env.EnvConst;
 import com.semantyca.nb.core.user.IUser;
 import com.semantyca.nb.core.user.constants.UserStatusCode;
@@ -10,10 +13,7 @@ import com.semantyca.nb.localization.constants.LanguageCode;
 import com.semantyca.nb.modules.administrator.init.ModuleConst;
 import com.semantyca.nb.modules.administrator.model.convertor.LanguageCodeConverter;
 import com.semantyca.nb.modules.administrator.model.convertor.UserStatusCodeConverter;
-import org.apache.johnzon.mapper.JohnzonConverter;
-import org.apache.johnzon.mapper.JohnzonIgnore;
 
-import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -28,19 +28,19 @@ public class User extends SimpleAppEntity implements IUser {
     private String email;
 
     @Convert(converter = LocalDateTimeDbConverter.class)
-    @JohnzonConverter(LocalDateConverter.class)
-    @JsonbDateFormat("dd.MM.yyyy kk:mm")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @Column(name = "reg_date", nullable = false, updatable = false)
     protected LocalDateTime regDate;
 
     @Convert(converter = LocalDateTimeDbConverter.class)
-    @JohnzonConverter(LocalDateConverter.class)
-    @JsonbDateFormat("dd.MM.yyyy kk:mm")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @Column(name = "last_mod_date", nullable = false, updatable = false)
     protected LocalDateTime lastModifiedDate;
 
     @Column(name="password", nullable=false, length = 64)
-    @JohnzonIgnore
+    //  @JohnzonIgnore
     private String password;
 
     @Column(nullable = false, length = 64)
@@ -88,7 +88,7 @@ public class User extends SimpleAppEntity implements IUser {
         this.password = password;
     }
 
-    @JohnzonIgnore
+    // @JohnzonIgnore
     public String getPassword() {
         return password;
     }

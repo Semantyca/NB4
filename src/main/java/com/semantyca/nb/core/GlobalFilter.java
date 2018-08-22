@@ -24,9 +24,6 @@ public class GlobalFilter  implements ContainerRequestFilter {
         //userSession.setUser(new AnonymousUser());
         userSession.setUser(new SuperUser()); //just for testing
         userAuthenticatedEvent.fire(userSession);
-
-
-
         return;
     }
 }

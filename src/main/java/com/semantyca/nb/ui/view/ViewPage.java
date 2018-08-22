@@ -1,11 +1,15 @@
 package com.semantyca.nb.ui.view;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.semantyca.nb.ui.filter.FilterForm;
 
 import java.util.List;
 
-public class ViewPage {
-    private List result;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({"option", "count", "pageNum", "maxPage", "filter", "result"})
+public class ViewPage<T> {
+    private List<T> result;
     private long count;
     private int pageNum;
     private String keyword;
@@ -14,7 +18,7 @@ public class ViewPage {
     private int pageSize;
     private String meta;
 
-    public ViewPage(String meta, List result, long count, int pageSize, int pageNum) {
+    public ViewPage(String meta, List<T> result, long count, int pageSize, int pageNum) {
         this.meta = meta;
         this.result = result;
         this.count = count;
@@ -22,7 +26,7 @@ public class ViewPage {
         this.pageNum = pageNum;
     }
 
-    public ViewPage(String meta, List result, long count, int pageSize, int pageNum, String k) {
+    public ViewPage(String meta, List<T> result, long count, int pageSize, int pageNum, String k) {
         this(meta, result, count, pageSize, pageNum);
         keyword = k;
     }
@@ -35,11 +39,11 @@ public class ViewPage {
         this.count = count;
     }
 
-    public List getResult() {
+    public List<T> getResult() {
         return result;
     }
 
-    public void setResult(List result) {
+    public void setResult(List<T> result) {
         this.result = result;
     }
 

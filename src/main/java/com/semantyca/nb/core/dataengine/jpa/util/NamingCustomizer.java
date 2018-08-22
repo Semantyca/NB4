@@ -1,5 +1,5 @@
 package com.semantyca.nb.core.dataengine.jpa.util;
-/*
+
 import org.eclipse.persistence.config.DescriptorCustomizer;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
 import org.eclipse.persistence.internal.helper.DatabaseField;
@@ -59,4 +59,4 @@ public class NamingCustomizer implements DescriptorCustomizer {
             return "_" + referenceTableName;
         }
     }
-}*/
+}

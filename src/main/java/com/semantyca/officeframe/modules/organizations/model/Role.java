@@ -1,11 +1,13 @@
 package com.semantyca.officeframe.modules.organizations.model;
 
 import com.semantyca.nb.core.dataengine.jpa.model.SimpleReferenceEntity;
-import com.semantyca.nb.core.dataengine.jpa.model.convertor.db.LocalizedValConverter;
 import com.semantyca.nb.localization.constants.LanguageCode;
 import com.semantyca.officeframe.modules.organizations.init.ModuleConst;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.util.Map;
 
 @Entity
@@ -13,7 +15,7 @@ import java.util.Map;
 public class Role extends SimpleReferenceEntity {
 
 
-    @Convert(converter = LocalizedValConverter.class)
+    //  @Convert(converter = LocalizedValConverter.class)
     @Column(name = "localized_descr", columnDefinition = "jsonb")
     private Map<LanguageCode, String> localizedDescr;
 

@@ -14,7 +14,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = ModuleConst.CODE + "__departments", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "organization_id"}))
+@Table(name = ModuleConst.CODE + "__departments", uniqueConstraints = @UniqueConstraint(columnNames = {"identifier", "organization_id"}))
 @Converters({@Converter(name = "dep_conv", converterClass = DepartmentConverter.class),
         @Converter(name = "emp_conv", converterClass = EmployeeConverter.class)})
 public class Department extends SimpleReferenceEntity {

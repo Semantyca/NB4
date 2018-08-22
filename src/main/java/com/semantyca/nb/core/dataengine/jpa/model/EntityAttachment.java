@@ -1,23 +1,28 @@
 package com.semantyca.nb.core.dataengine.jpa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.semantyca.nb.core.dataengine.jpa.util.NamingCustomizer;
+import org.eclipse.persistence.annotations.Customizer;
+
 import javax.persistence.*;
 import java.util.List;
 
 
 @Embeddable
-//@Customizer(NamingCustomizer.class)
+@Customizer(NamingCustomizer.class)
 public class EntityAttachment {
 
-    @Column(length = 64)
     private String fileName;
     @Column(length = 32)
     private String extension;
     private long size;
-    private boolean hasThumbnail = false;
+    private boolean hasThumbnail;
     private String comment;
 
+    @JsonIgnore
     @Lob
     @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "bytea")
     private byte[] file;
 
     public String getFileName() {
@@ -52,10 +57,12 @@ public class EntityAttachment {
         this.size = size;
     }
 
+    //@JsonIgnore
     public byte[] getFile() {
         return file;
     }
 
+    //@JsonIgnore
     public void setFile(byte[] file) {
         this.file = file;
         if (file != null) {

@@ -2,12 +2,14 @@ package com.semantyca.nb.core.dataengine.jpa.model;
 
 
 import com.semantyca.nb.core.dataengine.jpa.model.embedded.Reader;
+import com.semantyca.nb.core.dataengine.jpa.util.NamingCustomizer;
 import com.semantyca.nb.core.user.IUser;
+import org.eclipse.persistence.annotations.Customizer;
 
 import javax.persistence.*;
 import java.util.*;
 
-//@Customizer(NamingCustomizer.class)
+@Customizer(NamingCustomizer.class)
 @MappedSuperclass
 public abstract class SecureAppEntity<K> extends AppEntity implements ISecureAppEntity {
 
@@ -15,8 +17,8 @@ public abstract class SecureAppEntity<K> extends AppEntity implements ISecureApp
     private Set<Long> editors = new HashSet<>();
 
     @ElementCollection
-    @MapKey(name = "reader")
-    @CollectionTable(joinColumns = @JoinColumn(name = "entity_id"), uniqueConstraints = @UniqueConstraint(columnNames = {"entity_id", "readers"}))
+    @MapKey(name = "user")
+    @CollectionTable(joinColumns = @JoinColumn(name = "entity_id"), uniqueConstraints = @UniqueConstraint(columnNames = {"entity_id", "user_id"}))
     private Map<Long, Reader> readers = new HashMap<>();
 
     public Set<Long> getEditors() {
@@ -66,13 +68,13 @@ public abstract class SecureAppEntity<K> extends AppEntity implements ISecureApp
     public void setReaders(Map<Long, Reader> readers) {
         this.readers = readers;
     }
-
+/*
     public void setReaders(Set<Long> r) {
         readers.clear();
         for (Long reader : r) {
             addReader(reader);
         }
-    }
+    }*/
 
     public void addReader(IUser user) {
         long id = user.getId();
@@ -88,7 +90,7 @@ public abstract class SecureAppEntity<K> extends AppEntity implements ISecureApp
     public void addReader(Long userId) {
         if (userId > 0 && !readers.containsKey(userId)) {
             Reader reader = new Reader();
-            reader.setReader(userId);
+            reader.setUser(userId);
             readers.put(userId, reader);
         }
     }

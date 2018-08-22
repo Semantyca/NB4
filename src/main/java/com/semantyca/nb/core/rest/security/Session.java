@@ -1,10 +1,10 @@
 package com.semantyca.nb.core.rest.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.semantyca.nb.core.env.EnvConst;
 import com.semantyca.nb.core.user.IUser;
 import com.semantyca.nb.localization.constants.LanguageCode;
 import com.semantyca.nb.modules.administrator.model.User;
-import org.apache.johnzon.mapper.JohnzonIgnore;
 
 import java.io.File;
 import java.io.Serializable;
@@ -65,7 +65,7 @@ public class Session implements Serializable {
         this.redirectURL = redirectURL;
     }
 
-    @JohnzonIgnore
+    @JsonIgnore
     public File getTmpDir() {
         File userTmpDir = new File(EnvConst.TMP_DIR + File.separator + EnvConst.SERVER_NAME + File.separator + user.getId());
         if (!userTmpDir.exists()) {

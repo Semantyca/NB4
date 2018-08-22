@@ -17,14 +17,14 @@ public class StringUtil {
     }
 
     public static String getRndText() {
-        return genRndText("qwertyuiopasdfghjklzxcvbnm", 10);
+        return getRndText("qwertyuiopasdfghjklzxcvbnm", 10);
     }
 
     public static String getRndText(int len) {
-        return genRndText("qwertyuiopasdfghjklzxcvbnm", len);
+        return getRndText("qwertyuiopasdfghjklzxcvbnm", len);
     }
 
-    public static String genRndText(String setOfTheLetters, int len) {
+    public static String getRndText(String setOfTheLetters, int len) {
         Random r = new Random();
         String key = "";
         char[] letters = new char[setOfTheLetters.length() + 10];
