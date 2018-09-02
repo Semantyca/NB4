@@ -16,7 +16,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 public class PositionsTest extends AbstractTest<Position> {
-    private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/OfficeFrame/positions";
+    private static String BASE_SERVICE_URL = "http://" + APPLICATION_HOST + ":8080/nb4/OfficeFrame/positions";
     List<Position> entities = new ArrayList<Position>();
     private String[] data = {"ceo", "manager", "accounter", "engineer", "specialist", "secretary", "administrator",
             "department_manager", "forwarder"};

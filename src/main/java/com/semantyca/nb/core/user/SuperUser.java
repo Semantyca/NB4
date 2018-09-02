@@ -22,4 +22,10 @@ public class SuperUser extends SystemUser {
         return true;
     }
 
+
+    @Override
+    public String getLogin() {
+        return USER_NAME;
+    }
+
 }

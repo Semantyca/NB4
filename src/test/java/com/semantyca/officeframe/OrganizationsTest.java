@@ -17,7 +17,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 public class OrganizationsTest extends AbstractTest<Organization> {
-    private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/OfficeFrame/organizations";
+    private static String BASE_SERVICE_URL = "http://" + APPLICATION_HOST + ":8080/nb4/OfficeFrame/organizations";
     private String[] data = {"kazuav"};
     private String[] dataEng = {"KazUAV"};
     private String[] dataRus = {"КазУАВ"};

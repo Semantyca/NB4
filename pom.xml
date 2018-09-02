@@ -7,41 +7,23 @@
     <packaging>war</packaging>
     <dependencies>
 
-
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
             <version>2.6.2</version>
         </dependency>
-
-
-        <!--  <dependency>
-              <groupId>org.apache.openjpa</groupId>
-              <artifactId>openjpa</artifactId>
-              <version>3.0.0</version>
-              <scope>provided</scope>
-          </dependency>
-  -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.2</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>8.0</version>
             <scope>provided</scope>
         </dependency>
-
-        <!--<dependency>
-            <groupId>org.apache.johnzon</groupId>
-            <artifactId>johnzon-jsonb</artifactId>
-            <version>1.0.0</version>
-            <scope>provided</scope>
-        </dependency>-->
 
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
@@ -78,6 +60,12 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.9.6</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml</groupId>
+            <artifactId>jackson-xml-databind</artifactId>
+            <version>0.6.2</version>
             <scope>provided</scope>
         </dependency>
 
@@ -131,13 +119,6 @@
         </dependency>
 
 
-        <!--Testing dependencies-->
-        <!--  <dependency>
-              <groupId>org.apache.johnzon</groupId>
-              <artifactId>johnzon-serializer</artifactId>
-              <version>1.0.0</version>
-              <scope>test</scope>
-          </dependency>-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -157,12 +138,92 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <finalName>nb4</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>copy resources.xml for semantyca.com server</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <outputDirectory>${basedir}/target/classes/WEB-INF</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/META-INF</directory>
+                                    <includes>
+                                        <include>beans.xml</include>
+                                        <include>openejb-jar.xml</include>
+                                        <include>orm.xml</include>
+                                        <include>persistence.xml</include>
+                                        <include>server-resources.xml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.coderplus.maven.plugins</groupId>
+                <artifactId>copy-rename-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>rename resource file</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <sourceFile>${basedir}/target/classes/WEB-INF/server-resources.xml</sourceFile>
+                            <destinationFile>${basedir}/target/classes/WEB-INF/resources.xml</destinationFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
+
+
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <properties>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>corp1</id>
+            <name>Corporate Repository</name>
+            <url>file:///home/aida/tmp/maven</url>
+            <layout>default</layout>
+        </repository>
+        <snapshotRepository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>propSnap</id>
+            <name>Skyra Snapshots</name>
+            <url>file:///home/aida/tmp/maven</url>
+            <layout>legacy</layout>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

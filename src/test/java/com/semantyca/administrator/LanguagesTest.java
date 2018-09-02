@@ -14,7 +14,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 public class LanguagesTest extends AbstractTest<Language> {
-    private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/Administrator/languages";
+    private static String BASE_SERVICE_URL = "http://" + APPLICATION_HOST + ":8080/nb4/Administrator/languages";
 
 
     @Test

@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 public class CustomDateTimeSerializer extends JsonSerializer<LocalDateTime> {
 
-    public static final String DATE_TIME_JSON_FORMAT = "dd.MM.yyyy kk:mm";
+    public static final String DATE_TIME_JSON_FORMAT = "ddMMyyyykkmm";
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_JSON_FORMAT);
 
     @Override

@@ -15,7 +15,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 public class OrgCategoriesTest extends AbstractTest<OrgCategory> {
-    private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/OfficeFrame/orgcategories";
+    private static String BASE_SERVICE_URL = "http://" + APPLICATION_HOST + ":8080/nb4/OfficeFrame/orgcategories";
     String[] data = {"ltd", "self_employed", "jsc", "state_office", "state_enterprise", "international_company",
             "public_association", "city_Hall", "embassy", "educational_institution"};
     String[] dataEng = {"LTD", "Self employed", "JSC", "State office", "State enterprise", "International company",

@@ -57,12 +57,10 @@ public class EntityAttachment {
         this.size = size;
     }
 
-    //@JsonIgnore
     public byte[] getFile() {
         return file;
     }
 
-    //@JsonIgnore
     public void setFile(byte[] file) {
         this.file = file;
         if (file != null) {

@@ -1,5 +1,6 @@
 package com.semantyca.nb.modules.administrator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -40,8 +41,11 @@ public class User extends SimpleAppEntity implements IUser {
     protected LocalDateTime lastModifiedDate;
 
     @Column(name="password", nullable=false, length = 64)
-    //  @JohnzonIgnore
+    @JsonIgnore
     private String password;
+
+    @JsonIgnore
+    private String passwordhash;
 
     @Column(nullable = false, length = 64)
     private String login;
@@ -88,9 +92,18 @@ public class User extends SimpleAppEntity implements IUser {
         this.password = password;
     }
 
-    // @JohnzonIgnore
+    @JsonIgnore
     public String getPassword() {
         return password;
+    }
+
+    @JsonIgnore
+    public String getPasswordhash() {
+        return passwordhash;
+    }
+
+    public void setPasswordhash(String passwordhash) {
+        this.passwordhash = passwordhash;
     }
 
     public String getLogin() {

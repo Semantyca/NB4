@@ -31,8 +31,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         if (!isTokenBasedAuthentication(authorizationHeader)) {
             abortWithUnauthorized(requestContext);
-            Session userSession = new Session();
-            userSession.setUser(new AnonymousUser());
+            Session userSession = new Session(new AnonymousUser());
             userAuthenticatedEvent.fire(userSession);
             return;
         }

@@ -17,7 +17,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 public class DepartmentsTest extends AbstractTest<Department> {
-    private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/OfficeFrame/departments";
+    private static String BASE_SERVICE_URL = "http://" + APPLICATION_HOST + ":8080/nb4/OfficeFrame/departments";
     private String[] data = {"production", "rd", "purchasing", "marketing", "hr", "af"};
     private String[] dataEng = {"Production", "Research and Development", "Purchasing", "Marketing", "Human Resource Management", "Accounting and Finance"};
     private String[] dataRus = {"Production", "Research and Development", "Purchasing", "Marketing", "Human Resource Management", "Accounting and Finance"};

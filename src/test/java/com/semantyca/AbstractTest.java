@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractTest<T extends ISimpleAppEntity> {
+    //protected static String APPLICATION_HOST = "semantyca.com";
+    protected static String APPLICATION_HOST = "localhost";
     protected static List<Object> providers = new ArrayList<Object>();
     private Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     private static ObjectMapper mapper = new ObjectMapper();

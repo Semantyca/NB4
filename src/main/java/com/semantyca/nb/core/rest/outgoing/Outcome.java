@@ -1,5 +1,6 @@
 package com.semantyca.nb.core.rest.outgoing;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.semantyca.nb.core.dataengine.jpa.ISimpleAppEntity;
 import com.semantyca.nb.core.env.EnvConst;
 import com.semantyca.nb.ui.action.ActionBar;
@@ -20,11 +21,14 @@ public class Outcome {
     public static final String EXCEPTION_PAYLOAD = "error";
     public static final String ICONS_SET_PAYLOAD = "icons";
 
-    private final static String UNDEFINED_ID = "undefined";
-    private String id = UNDEFINED_ID;
-    private String title = EnvConst.APP_ID;
-    private String payloadTitle = EnvConst.APP_ID;
-    private LinkedHashMap<String, Object> payload = new LinkedHashMap<>();
+    @JsonIgnore
+    public String temporaryFileName;
+
+    protected final static String UNDEFINED_ID = "undefined";
+    protected String id = UNDEFINED_ID;
+    protected String title = EnvConst.APP_ID;
+    protected String payloadTitle = EnvConst.APP_ID;
+    protected LinkedHashMap<String, Object> payload = new LinkedHashMap<>();
 
     public String getId() {
         return id;

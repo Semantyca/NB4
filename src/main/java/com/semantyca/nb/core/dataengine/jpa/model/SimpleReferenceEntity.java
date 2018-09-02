@@ -8,6 +8,7 @@ import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @MappedSuperclass
 public class SimpleReferenceEntity extends AppEntity{
@@ -18,15 +19,6 @@ public class SimpleReferenceEntity extends AppEntity{
     @Convert(converter = LocalizedValConverter.class)
     @Column(name = "loc_name", columnDefinition = "jsonb")
     private Map<LanguageCode, String> locName = new HashMap<LanguageCode, String>();
-
-
-    @Override
-    public String getTitle() {
-        if (super.getTitle() == null || super.getTitle().isEmpty()) {
-            return identifier;
-        }
-        return super.getTitle();
-    }
 
     public String getIdentifier() {
         return identifier;
@@ -61,5 +53,14 @@ public class SimpleReferenceEntity extends AppEntity{
         this.locName.put(languageCode, val);
     }
 
+
+    @Override
+    public String toString() {
+        if (getId() == null) {
+            return "id is null," + this.getClass().getName();
+        }
+        UUID id = UUID.fromString(getId().toString());
+        return id.toString() + "," + identifier + ", " + this.getClass().getName();
+    }
 
 }

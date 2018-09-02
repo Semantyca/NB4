@@ -1,6 +1,6 @@
 package com.semantyca.nb.core.service;
 
-import com.semantyca.nb.core.control.Auth;
+import com.semantyca.nb.core.control.AuthController;
 import com.semantyca.nb.core.control.Credentials;
 import com.semantyca.nb.core.env.EnvConst;
 import com.semantyca.nb.core.env.Environment;
@@ -25,7 +25,7 @@ public class SessionsResource {
     HttpServletRequest request;
 
     @Inject
-    Auth authController;
+    AuthController authController;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -35,7 +35,11 @@ public class SessionsResource {
         try {
             Session userSession = authController.authenticate(credentials.getUserName(), credentials.getPwd());
             outcome.addPayload("session", userSession);
-            return Response.ok(outcome).build();
+            if (userSession.isAuthenticated()) {
+                return Response.ok(outcome).build();
+            } else {
+                return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(outcome).build();
+            }
 
         } catch (Exception e) {
             return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(outcome).build();
@@ -53,4 +57,12 @@ public class SessionsResource {
     public Response signIn(@FormParam("userName") String userName, @FormParam("password") String password) {
         return  authenticateUser(new Credentials(userName, password));
     }
+
+
+    @OPTIONS
+    public Response getOptions() {
+        return Response.ok().build();
+    }
+
+
 }

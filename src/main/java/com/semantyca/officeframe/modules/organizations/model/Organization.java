@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = ModuleConst.CODE + "__orgs", uniqueConstraints = @UniqueConstraint(columnNames = {"identifier", "bizID"}))
+@Table(name = ModuleConst.CODE + "__orgs", uniqueConstraints = @UniqueConstraint(columnNames = {"identifier"}))
 public class Organization extends SimpleReferenceEntity {
 
     @ManyToOne(optional = false)

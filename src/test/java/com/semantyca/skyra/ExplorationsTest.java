@@ -27,7 +27,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 public class ExplorationsTest extends AbstractTest<Exploration> {
-    private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/Skyra/explorations";
+    private static String BASE_SERVICE_URL = "http://" + APPLICATION_HOST + ":8080/nb4/Skyra/explorations";
     private static String FILES_PLAYGROUND = "/home/aida/Downloads";
 
     @Test
@@ -42,7 +42,7 @@ public class ExplorationsTest extends AbstractTest<Exploration> {
     public void addTestExplorations() throws Exception {
         List<String> data = new ArrayList();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             data.add("mock identifier " + StringUtil.getRndText("abc", 3));
         }
 
@@ -59,18 +59,19 @@ public class ExplorationsTest extends AbstractTest<Exploration> {
                 newEntity.setPilot1((Employee) ListUtil.getRndElement(employees));
                 newEntity.setPilot2((Employee) ListUtil.getRndElement(employees));
                 newEntity.setTitle(u);
-                File file = FileUtil.getRndFile(FILES_PLAYGROUND);
-                assertTrue(file.exists());
+                //    File file = FileUtil.getRndFile(FILES_PLAYGROUND);
+                //    assertTrue(file.exists());
                 EntityAttachment entityAttachment = new EntityAttachment();
                 entityAttachment.setComment("comment example");
-                entityAttachment.setFileName(file.getName());
-                System.out.println(file.getAbsolutePath());
-                uploadFile(BASE_SERVICE_URL, file);
+                //       entityAttachment.setFileName(file.getName());
+                //      System.out.println(file.getAbsolutePath());
+                //      uploadFile(BASE_SERVICE_URL, file);
                 //     byte[] fileContent = Files.readAllBytes(file.toPath());
                 //     entityAttachment.setFile(fileContent);
-                List<EntityAttachment> attachmentMap = new ArrayList<>();
-                attachmentMap.add(entityAttachment);
-                newEntity.setFiles(attachmentMap);
+                //      List<EntityAttachment> attachmentMap = new ArrayList<>();
+                //     attachmentMap.add(entityAttachment);
+                //    newEntity.setFiles(attachmentMap);
+                //newEntity.setPointCoordiantes(new KMLParser().process("/home/aida/Downloads/map/кар3.kml"));
             } else {
                 newEntity = entity;
             }

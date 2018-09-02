@@ -1,0 +1,17 @@
+<resources>
+    <!--resource file for server -->
+    <Resource id="nb4Db" type="DataSource">
+        JdbcDriver = org.postgresql.Driver
+        JdbcUrl = jdbc:postgresql://localhost:5437/nb4
+        UserName = postgres
+        Password = Rev2004
+    </Resource>
+
+    <Resource id="nb4DbUnmanaged" type="DataSource">
+        JdbcDriver = org.postgresql.Driver
+        JdbcUrl = jdbc:postgresql://localhost:5437/nb4
+        UserName = postgres
+        Password = Rev2004
+        JtaManaged = false
+    </Resource>
+</resources>

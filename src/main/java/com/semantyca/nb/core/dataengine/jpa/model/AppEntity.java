@@ -34,13 +34,13 @@ public abstract class AppEntity implements IAppEntity {
     @Column(name = "reg_date", nullable = false, updatable = false)
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    private LocalDateTime regDate;
+    private LocalDateTime regDate = LocalDateTime.now();
 
     @Convert(converter = LocalDateTimeDbConverter.class)
     @Column(name = "last_mod_date", nullable = false)
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    private LocalDateTime lastModifiedDate = LocalDateTime.now();
+    private LocalDateTime lastModifiedDate;
 
     @Column(name = "last_mod_user", nullable = false)
     private Long lastModifier;

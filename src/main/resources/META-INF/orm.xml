@@ -7,4 +7,7 @@
 
     <converter class="com.semantyca.nb.modules.administrator.model.convertor.UserStatusCodeConverter"/>
     <converter class="com.semantyca.nb.modules.administrator.model.convertor.LanguageCodeConverter"/>
+
+    <converter class="com.semantyca.skyra.modules.operator.model.constants.converter.PathFaceConverter"/>
+    <converter class="com.semantyca.skyra.modules.operator.model.constants.converter.LatLngConverter"/>
 </entity-mappings>

@@ -1,5 +1,6 @@
 package com.semantyca.skyra.modules.operator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.semantyca.nb.core.dataengine.jpa.IEntityWithAttachments;
@@ -12,6 +13,11 @@ import com.semantyca.officeframe.modules.organizations.model.Employee;
 import com.semantyca.officeframe.modules.organizations.model.converter.EmployeeConverter;
 import com.semantyca.officeframe.modules.reference.model.ExplorationStatus;
 import com.semantyca.skyra.modules.operator.init.ModuleConst;
+import com.semantyca.skyra.modules.operator.model.constants.converter.LatLngConverter;
+import com.semantyca.skyra.modules.operator.model.constants.converter.PathFaceConverter;
+import com.semantyca.skyra.modules.operator.model.embedded.PathFaceOptions;
+import com.semantyca.skyra.modules.operator.model.embedded.PointCoordiantes;
+import com.semantyca.skyra.modules.operator.other.KMLParser;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -41,12 +47,39 @@ public class Exploration extends AppEntity implements IEntityWithAttachments {
     @JoinColumn(columnDefinition = "uuid", name = "pilot2_id")
     private Employee pilot2;
 
+    @Convert(converter = LatLngConverter.class)
+    @Column(name = "lat_lng", columnDefinition = "jsonb")
+    @JsonProperty("path")
+    private List<PointCoordiantes> flightPath = new ArrayList<>();
+
+    @Convert(converter = PathFaceConverter.class)
+    @Column(name = "path_options", columnDefinition = "jsonb")
+    @JsonProperty("polylineOptions")
+    private PathFaceOptions options;
+
     @Column(columnDefinition = "TEXT")
     private String comment;
 
     @ElementCollection
     @CollectionTable(joinColumns = @JoinColumn(name = "entity_id"), uniqueConstraints = @UniqueConstraint(columnNames = {"entity_id", "filename"}))
-    private List<EntityAttachment> files = new ArrayList<>();
+    private List<EntityAttachment> files;
+
+    @PreUpdate
+    public void postUpdate() {
+        if (files != null) {
+            for (EntityAttachment attachment : files) {
+                KMLParser parser = new KMLParser();
+                flightPath.clear();
+                flightPath.addAll(parser.process(attachment.getFile()));
+            }
+        }
+
+        if (options == null) {
+            options = new PathFaceOptions();
+        }
+        options.setColor(status.getColor());
+
+    }
 
     public LocalDateTime getStartTime() {
         return startTime;
@@ -70,6 +103,22 @@ public class Exploration extends AppEntity implements IEntityWithAttachments {
 
     public void setPilot2(Employee pilot2) {
         this.pilot2 = pilot2;
+    }
+
+    public List<PointCoordiantes> getFlightPath() {
+        return flightPath;
+    }
+
+    public void setFlightPath(List<PointCoordiantes> flightPath) {
+        this.flightPath = flightPath;
+    }
+
+    public PathFaceOptions getOptions() {
+        return options;
+    }
+
+    public void setOptions(PathFaceOptions options) {
+        this.options = options;
     }
 
     public String getComment() {

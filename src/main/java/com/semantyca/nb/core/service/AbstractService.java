@@ -3,10 +3,13 @@ package com.semantyca.nb.core.service;
 import com.semantyca.nb.core.dataengine.jpa.IAppEntity;
 import com.semantyca.nb.core.dataengine.jpa.IDAO;
 import com.semantyca.nb.core.dataengine.jpa.IEntityWithAttachments;
+import com.semantyca.nb.core.dataengine.jpa.dao.exception.DAOException;
+import com.semantyca.nb.core.dataengine.jpa.dao.exception.DAOExceptionType;
 import com.semantyca.nb.core.dataengine.jpa.model.EntityAttachment;
 import com.semantyca.nb.core.dataengine.jpa.model.constant.ExistenceState;
 import com.semantyca.nb.core.rest.RestProvider;
 import com.semantyca.nb.core.rest.WebFormData;
+import com.semantyca.nb.core.rest.outgoing.ErrorOutcome;
 import com.semantyca.nb.core.rest.outgoing.Outcome;
 import com.semantyca.nb.core.rest.security.Session;
 import com.semantyca.nb.core.user.IUser;
@@ -21,6 +24,7 @@ import javax.activation.DataHandler;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
@@ -92,52 +96,29 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") String id) {
-        Outcome outcome = new Outcome();
-        T entity = null;
-        if ("new".equalsIgnoreCase(id)) {
-            entity = composeNew(session.getUser());
-            outcome.setTitle("New");
-        } else {
-            try {
-                entity = getDao().findById(id);
-                outcome.setTitle(entity.getTitle());
-            } catch (Exception e) {
+        try {
+            return Response.ok(getRequestHandler(id)).build();
+        } catch (DAOException e) {
+            if (e.getType() == DAOExceptionType.ENTITY_NOT_FOUND) {
                 return Response.status(Response.Status.NOT_FOUND).build();
+            } else {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorOutcome(e)).build();
             }
         }
-        outcome.addPayload(entity);
-        return Response.ok(outcome).build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(T dto) {
-        Outcome outcome = new Outcome();
-        outcome.setTitle(dto.getType());
-        if (dto.getExistenceState() == ExistenceState.NOT_SAVED) {
-            dto.setExistenceState(ExistenceState.SAVED);
-            return update(dto);
-        } else {
-            outcome.addPayload(getDao().add(dto));
-        }
-
-        return Response.ok(outcome).build();
+        return Response.ok(addRequestHandler(dto)).build();
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response update(T dto) {
-        Outcome outcome = new Outcome();
-        outcome.setTitle(dto.getType());
-        if (dto.getExistenceState() != ExistenceState.SAVED) {
-            dto.setExistenceState(ExistenceState.SAVED);
-        }
-        normalizeAttachments(dto);
-        outcome.addPayload(getDao().update(dto));
-
-        return Response.ok(outcome).build();
+        return Response.ok(updateRequestHandler(dto)).build();
     }
 
     @DELETE
@@ -152,29 +133,7 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
     @Path("uploadFile")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadFile(List<Attachment> attachments, @Context HttpServletRequest request) {
-        for (Attachment attachment : attachments) {
-            DataHandler handler = attachment.getDataHandler();
-            try {
-                InputStream stream = handler.getInputStream();
-                MultivaluedMap<String, String> map = attachment.getHeaders();
-                String temporaryFile = session.getTmpDir().getAbsolutePath() + File.separator + getFileName(map);
-                System.out.println("fileName Here:" + temporaryFile);
-                OutputStream out = new FileOutputStream(new File(temporaryFile));
-
-                int read = 0;
-                byte[] bytes = new byte[1024];
-                while ((read = stream.read(bytes)) != -1) {
-                    out.write(bytes, 0, read);
-                }
-                stream.close();
-                out.flush();
-                out.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return Response.status(Response.Status.CREATED).entity(new Outcome().addPayload("uploaded")).build();
+        return Response.status(Response.Status.CREATED).entity(attachmentRequestHandler(attachments)).build();
     }
 
     @GET
@@ -222,13 +181,85 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
         return null;
     }
 
+    protected Outcome getRequestHandler(String id) throws NoResultException, DAOException {
+        Outcome outcome = new Outcome();
+        T entity;
+        if ("new".equalsIgnoreCase(id)) {
+            entity = composeNew(session.getUser());
+            outcome.setTitle("New");
+        } else {
+            entity = getDao().findById(id);
+            if (entity != null) {
+                outcome.setTitle(entity.getTitle());
+            } else {
+                throw new DAOException(DAOExceptionType.ENTITY_NOT_FOUND, id);
+            }
+        }
+        outcome.addPayload(entity);
+        return outcome;
+    }
 
-    private String getFileName(MultivaluedMap<String, String> header) {
+    protected Outcome addRequestHandler(T dto) {
+        Outcome outcome = new Outcome();
+        outcome.setTitle(dto.getType());
+        if (dto.getExistenceState() == ExistenceState.NOT_SAVED) {
+            dto.setExistenceState(ExistenceState.SAVED);
+            return updateRequestHandler(dto);
+        } else {
+            outcome.addPayload(getDao().add(dto));
+        }
+        return outcome;
+    }
+
+    protected Outcome updateRequestHandler(T dto) {
+        Outcome outcome = new Outcome();
+        outcome.setTitle(dto.getType());
+        if (dto.getExistenceState() != ExistenceState.SAVED) {
+            dto.setExistenceState(ExistenceState.SAVED);
+        }
+        outcome.temporaryFileName = normalizeAttachments(dto);
+        outcome.addPayload(getDao().update(dto));
+
+        return outcome;
+    }
+
+    protected Outcome attachmentRequestHandler(List<Attachment> attachments) {
+        Outcome outcome = new Outcome();
+        for (Attachment attachment : attachments) {
+            DataHandler handler = attachment.getDataHandler();
+            try {
+                InputStream stream = handler.getInputStream();
+                MultivaluedMap<String, String> map = attachment.getHeaders();
+                outcome.temporaryFileName = session.getTmpDir().getAbsolutePath() + File.separator + getFileName(map);
+                OutputStream out = new FileOutputStream(new File(outcome.temporaryFileName));
+
+                int read = 0;
+                byte[] bytes = new byte[1024];
+                while ((read = stream.read(bytes)) != -1) {
+                    out.write(bytes, 0, read);
+                }
+                stream.close();
+                out.flush();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return outcome;
+    }
+
+    protected String getFileName(MultivaluedMap<String, String> header) {
         String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
         for (String filename : contentDisposition) {
             if ((filename.trim().startsWith("filename"))) {
                 String[] name = filename.split("=");
                 String exactFileName = name[1].trim().replaceAll("\"", "");
+                try {
+                    exactFileName = new String(exactFileName.getBytes("ISO-8859-1"), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+
+                }
                 return exactFileName;
             }
         }
@@ -244,6 +275,29 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
                     File tf = new File(temporaryFile);
                     if (writeToFile(tf.getAbsolutePath(), entityAttachment.getFile())) {
                         return tf;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    protected String normalizeAttachments(T entity) {
+        if (IEntityWithAttachments.class.isAssignableFrom(entity.getClass())) {
+            IEntityWithAttachments entityWithAttachments = (IEntityWithAttachments) entity;
+            for (EntityAttachment entry : entityWithAttachments.getFiles()) {
+                if (entry.getFile() == null) {
+                    EntityAttachment attachment = entry;
+                    File temporaryFile = new File(session.getTmpDir().getAbsolutePath() + File.separator + attachment.getFileName());
+                    try {
+                        byte[] fileContent = Files.readAllBytes(temporaryFile.toPath());
+                        attachment.setFile(fileContent);
+                        List<EntityAttachment> attachmentMap = new ArrayList<>();
+                        attachmentMap.add(attachment);
+                        entityWithAttachments.setFiles(attachmentMap);
+                        return temporaryFile.getAbsolutePath();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -274,27 +328,6 @@ public abstract class AbstractService<T extends IAppEntity> extends RestProvider
             }
         }
         return false;
-    }
-
-    private void normalizeAttachments(T entity) {
-        if (IEntityWithAttachments.class.isAssignableFrom(entity.getClass())) {
-            IEntityWithAttachments entityWithAttachments = (IEntityWithAttachments) entity;
-            for (EntityAttachment entry : entityWithAttachments.getFiles()) {
-                if (entry.getFile() == null) {
-                    EntityAttachment attachment = entry;
-                    File temporaryFile = new File(session.getTmpDir().getAbsolutePath() + File.separator + attachment.getFileName());
-                    try {
-                        byte[] fileContent = Files.readAllBytes(temporaryFile.toPath());
-                        attachment.setFile(fileContent);
-                        List<EntityAttachment> attachmentMap = new ArrayList<>();
-                        attachmentMap.add(attachment);
-                        entityWithAttachments.setFiles(attachmentMap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
     }
 
 

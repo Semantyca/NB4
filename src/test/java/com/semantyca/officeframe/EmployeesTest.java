@@ -20,12 +20,19 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 public class EmployeesTest extends AbstractTest<Employee> {
-    private static String BASE_SERVICE_URL = "http://localhost:8080/nb4/OfficeFrame/employees";
-    private String[] data = {"Витвицкий Руслан", "Nuno Zimas"};
-    private String[] dataEng = {"Vitvitsky Ruslan", "Nuno Zimas"};
-    private String[] dataRus = {"Витвицкий Руслан", "Нуно Зимаш"};
-    private String[] dataKaz = {"Витвицкий Руслан", "Нуно Зимаш"};
+    private static String BASE_SERVICE_URL = "http://" + APPLICATION_HOST + ":8080/nb4/OfficeFrame/employees";
+    private String[] data = {"laura_smith", "fernando_silva"};
+    private String[] dataEng = {"Laura Smith", "Fernando Silva"};
+    private String[] dataRus = {"Лаура Смит", "Фернандо Сильва"};
+    private String[] dataKaz = {"Лаура Смит", "Фернандо Сильва"};
 
+    @Test
+    public void getEmployeesTest() {
+        List<Employee> entities = getEntities(BASE_SERVICE_URL);
+        for (Employee employee : entities) {
+            System.out.println(employee);
+        }
+    }
 
     @Test
     public void addEmployees() {
